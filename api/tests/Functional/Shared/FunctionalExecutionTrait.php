@@ -17,7 +17,7 @@ trait FunctionalExecutionTrait
         return new RequestJson;
     }
 
-    private function executeRequest(
+    protected function executeRequest(
         string $method,
         string $route,
         ?RequestJson $jsonRequest = null,

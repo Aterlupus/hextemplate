@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Test\Functional\Shared;
 
+use App\Core\Util\Set;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -47,6 +48,12 @@ abstract class AbstractFunctionalTest extends WebTestCase
     protected function assertResponseMessageSubstring(string $substring): void
     {
         self::assertStringContainsString($substring, $this->getResponseJson());
+    }
+
+    protected static function getOnlyViolation(array $response): array
+    {
+        self::assertCount(1, $response['violations']);
+        return Set::getOnly($response['violations']);
     }
 
     protected function getClientBrowser(): KernelBrowser

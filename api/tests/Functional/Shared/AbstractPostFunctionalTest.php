@@ -3,17 +3,20 @@ declare(strict_types=1);
 
 namespace Test\Functional\Shared;
 
-use App\Core\Util\Set;
 use Symfony\Component\HttpFoundation\Response;
-use Test\Helper\Random;
 
-abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
+abstract class AbstractPostFunctionalTest extends AbstractHttpFunctionalTest
 {
     abstract protected static function getEntityClass(): string;
 
     abstract protected static function getUri(): string;
 
     abstract protected static function getEntityJson(): RequestJson;
+
+    protected static function getHttpMethod(): string
+    {
+        return 'POST';
+    }
 
     protected function itCreates(): void
     {
@@ -35,57 +38,27 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
 
     protected function itFailsOnCreatingWithoutFieldValue(string $fieldName): void
     {
-        $json = static::getEntityJson()
-            ->remove($fieldName);
-
-        $response = $this->post(static::getUri(), $json);
-        self::assertResponseCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-
-        $violation = self::getOnlyViolation($response);
-        self::assertEquals($fieldName, $violation['propertyPath']);
-        self::assertEquals('This value should not be null.', $violation['message']);
+        $this->itFailsOnActingWithoutFieldValue(
+            static::getUri(),
+            $fieldName
+        );
     }
 
-    //TODO: Consider making call for "$minLength + 1" Random::getString to check that a little longer string works
     protected function itFailsOnCreatingWithTooShortFieldValue(string $fieldName, int $minLength): void
     {
-        $json = static::getEntityJson()
-            ->set($fieldName, '');
-
-        $response = $this->post(static::getUri(), $json);
-        self::assertResponseCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-
-        $violation = self::getOnlyViolation($response);
-        self::assertEquals($fieldName, $violation['propertyPath']);
-        $assertedMessage = sprintf(
-            'This value is too short. It should have %d character%s or more.',
-            $minLength,
-            $minLength > 1 ? 's' : ''
+        $this->itFailsOnActingWithTooShortFieldValue(
+            static::getUri(),
+            $fieldName,
+            $minLength
         );
-        self::assertEquals($assertedMessage, $violation['message']);
     }
 
-    //TODO: Consider making call for "$minLength - 1" Random::getString to check that a little shorter string works
     protected function itFailsOnCreatingWithTooLongFieldValue(string $fieldName, int $maxLength): void
     {
-        $json = static::getEntityJson()
-            ->set($fieldName, Random::getString($maxLength + 1));
-
-        $response = $this->post(static::getUri(), $json);
-        self::assertResponseCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-
-        $violation = self::getOnlyViolation($response);
-        self::assertEquals($fieldName, $violation['propertyPath']);
-        $assertedMessage = sprintf(
-            'This value is too long. It should have %d characters or less.',
+        $this->itFailsOnActingWithTooLongFieldValue(
+            static::getUri(),
+            $fieldName,
             $maxLength
         );
-        self::assertEquals($assertedMessage, $violation['message']);
-    }
-
-    private static function getOnlyViolation(array $response): array
-    {
-        self::assertCount(1, $response['violations']);
-        return Set::getOnly($response['violations']);
     }
 }
