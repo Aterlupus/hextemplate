@@ -13,9 +13,8 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
 
     abstract protected static function getPostJson(): RequestJson;
 
-    protected function itCreates(
-        string $entityClass
-    ): void {
+    protected function itCreates(string $entityClass): void
+    {
         $json = static::getPostJson();
 
         $response = $this->post(static::getUri(), $json);
@@ -46,10 +45,8 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
     }
 
     //TODO: Consider making call for "$minLength + 1" Random::getString to check that a little longer string works
-    protected function itFailsOnCreatingWithTooShortFieldValue(
-        string $fieldName,
-        int $minLength
-    ): void {
+    protected function itFailsOnCreatingWithTooShortFieldValue(string $fieldName, int $minLength): void
+    {
         $json = static::getPostJson()
             ->set($fieldName, '');
 
@@ -67,10 +64,8 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
     }
 
     //TODO: Consider making call for "$minLength - 1" Random::getString to check that a little shorter string works
-    protected function itFailsOnCreatingWithTooLongFieldValue(
-        string $fieldName,
-        int $maxLength
-    ): void {
+    protected function itFailsOnCreatingWithTooLongFieldValue(string $fieldName, int $maxLength): void
+    {
         $json = static::getPostJson()
             ->set($fieldName, Random::getString($maxLength + 1));
 
@@ -86,7 +81,7 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
         self::assertEquals($assertedMessage, $violation['message']);
     }
 
-    private static function getOnlyViolation(array $response)
+    private static function getOnlyViolation(array $response): array
     {
         self::assertCount(1, $response['violations']);
         return Set::getOnly($response['violations']);
