@@ -30,12 +30,22 @@ class GetTestItemTest extends AbstractFunctionalTest
 
     public function testItFailsToGetNonExistentTestItem()
     {
-        //$id = 'xxx'; //TODO: Test for this format
         $id = Uuid::string();
 
         $response = $this->get(sprintf(self::TEST_ITEM, $id));
         $this->assertResponseCode(Response::HTTP_NOT_FOUND);
 
         self::assertEquals(sprintf('Resource %s of id "%s" not found', TypeInspector::getClassName(TestItem::class), $id), $response);
+    }
+
+    public function testItFailsToGetNonExistentTestItemByInvalidId()
+    {
+        $id = 'xxx';
+
+        $response = $this->get(sprintf(self::TEST_ITEM, $id));
+        $this->assertResponseCode(Response::HTTP_NOT_FOUND);
+
+        self::assertEquals('An error occurred', $response['title']);
+        self::assertEquals('Invalid identifier value or configuration.', $response['detail']);
     }
 }

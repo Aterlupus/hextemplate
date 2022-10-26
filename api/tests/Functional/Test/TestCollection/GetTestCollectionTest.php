@@ -39,13 +39,23 @@ class GetTestCollectionTest extends AbstractFunctionalTest
 
     public function testItFailsToGetNonExistentTestCollection()
     {
-        //$id = 'xxx'; //TODO: Test for this format
         $id = Uuid::string();
 
         $response = $this->get(sprintf(self::TEST_COLLECTION, $id));
         $this->assertResponseCode(Response::HTTP_NOT_FOUND);
 
         self::assertEquals(sprintf('Resource %s of id "%s" not found', TypeInspector::getClassName(TestCollection::class), $id), $response);
+    }
+
+    public function testItFailsToGetNonExistentTestCollectionByInvalidId()
+    {
+        $id = 'xxx';
+
+        $response = $this->get(sprintf(self::TEST_COLLECTION, $id));
+        $this->assertResponseCode(Response::HTTP_NOT_FOUND);
+
+        self::assertEquals('An error occurred', $response['title']);
+        self::assertEquals('Invalid identifier value or configuration.', $response['detail']);
     }
 
     /*
