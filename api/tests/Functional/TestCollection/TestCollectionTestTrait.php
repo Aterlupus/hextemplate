@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Functional\Test\TestCollection;
+namespace Test\Functional\TestCollection;
 
 use App\TestCollection\Domain\TestCollection;
 use App\TestCollection\Domain\TestCollectionTestItemsIds;
 use App\TestItem\Domain\TestItemId;
-use Test\Functional\RequestJson;
+use Test\Functional\Shared\RequestJson;
 use Test\Helper\Random;
 
 trait TestCollectionTestTrait

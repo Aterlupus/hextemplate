@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Functional;
+namespace Test\Functional\Shared;
 
 use App\Core\Suit\ResponseCodesSuit;
 use App\Core\Format\StackTraceFormatter;

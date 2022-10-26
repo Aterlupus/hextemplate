@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Functional\Test\TestItem;
+namespace Test\Functional\TestItem;
 
 use App\Core\Uuid;
 use App\TestItem\Domain\TestItem;
-use Test\Functional\RequestJson;
+use Test\Functional\Shared\RequestJson;
 use Test\Helper\Random;
 
 trait TestItemTestTrait

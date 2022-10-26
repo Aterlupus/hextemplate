@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Functional\Test\TestCollection;
+namespace Test\Functional\TestCollection;
 
 use Symfony\Component\HttpFoundation\Response;
-use Test\Functional\AbstractGetFunctionalTest;
+use Test\Functional\Shared\AbstractGetFunctionalTest;
 
 class GetTestCollectionTest extends AbstractGetFunctionalTest
 {

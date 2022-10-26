@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Functional\Test\TestCollection;
+namespace Test\Functional\TestCollection;
 
 use App\Shared\Domain\AbstractDomainEntity;
-use Test\Functional\AbstractPutFunctionalTest;
+use Test\Functional\Shared\AbstractPutFunctionalTest;
 
 class PutTestCollectionTest extends AbstractPutFunctionalTest
 {

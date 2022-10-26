@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Functional\Test\TestItem;
+namespace Test\Functional\TestItem;
 
-use Test\Functional\AbstractPutFunctionalTest;
+use Test\Functional\Shared\AbstractPutFunctionalTest;
 
 class PutTestItemTest extends AbstractPutFunctionalTest
 {

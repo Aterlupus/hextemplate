@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Functional;
+namespace Test\Functional\Shared;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

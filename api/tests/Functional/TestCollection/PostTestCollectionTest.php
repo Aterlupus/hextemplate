@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Functional\Test\TestCollection;
+namespace Test\Functional\TestCollection;
 
-use Test\Functional\AbstractPostFunctionalTest;
+use Test\Functional\Shared\AbstractPostFunctionalTest;
 
 class PostTestCollectionTest extends AbstractPostFunctionalTest
 {
