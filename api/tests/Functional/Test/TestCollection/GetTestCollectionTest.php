@@ -3,19 +3,22 @@ declare(strict_types=1);
 
 namespace Test\Functional\Test\TestCollection;
 
-use App\Core\Util\TypeInspector;
-use App\Core\Uuid;
 use App\TestCollection\Domain\TestCollection;
 use App\TestCollection\Domain\TestCollectionTestItemsIds;
 use App\TestItem\Domain\TestItemId;
 use Symfony\Component\HttpFoundation\Response;
-use Test\Functional\AbstractFunctionalTest;
+use Test\Functional\AbstractGetFunctionalTest;
 use Test\Helper\Random;
 
-class GetTestCollectionTest extends AbstractFunctionalTest
+class GetTestCollectionTest extends AbstractGetFunctionalTest
 {
     private const TEST_COLLECTION = '/api/test_collections/%s.json';
 
+
+    protected static function getUri(): string
+    {
+        return self::TEST_COLLECTION;
+    }
 
     public function testItGetsTestCollection()
     {
@@ -39,23 +42,12 @@ class GetTestCollectionTest extends AbstractFunctionalTest
 
     public function testItFailsToGetNonExistentTestCollection()
     {
-        $id = Uuid::string();
-
-        $response = $this->get(sprintf(self::TEST_COLLECTION, $id));
-        $this->assertResponseCode(Response::HTTP_NOT_FOUND);
-
-        self::assertEquals(sprintf('Resource %s of id "%s" not found', TypeInspector::getClassName(TestCollection::class), $id), $response);
+        $this->itFailsToGetNonExistent(TestCollection::class);
     }
 
     public function testItFailsToGetNonExistentTestCollectionByInvalidId()
     {
-        $id = 'xxx';
-
-        $response = $this->get(sprintf(self::TEST_COLLECTION, $id));
-        $this->assertResponseCode(Response::HTTP_NOT_FOUND);
-
-        self::assertEquals('An error occurred', $response['title']);
-        self::assertEquals('Invalid identifier value or configuration.', $response['detail']);
+        $this->testItFailsToGetNonExistentByInvalidId();
     }
 
     /*

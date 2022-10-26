@@ -3,16 +3,19 @@ declare(strict_types=1);
 
 namespace Test\Functional\Test\TestItem;
 
-use App\Core\Util\TypeInspector;
-use App\Core\Uuid;
 use App\TestItem\Domain\TestItem;
 use Symfony\Component\HttpFoundation\Response;
-use Test\Functional\AbstractFunctionalTest;
+use Test\Functional\AbstractGetFunctionalTest;
 
-class GetTestItemTest extends AbstractFunctionalTest
+class GetTestItemTest extends AbstractGetFunctionalTest
 {
     private const TEST_ITEM = '/api/test_items/%s.json';
 
+
+    protected static function getUri(): string
+    {
+        return self::TEST_ITEM;
+    }
 
     public function testItGetsTestItem()
     {
@@ -30,22 +33,11 @@ class GetTestItemTest extends AbstractFunctionalTest
 
     public function testItFailsToGetNonExistentTestItem()
     {
-        $id = Uuid::string();
-
-        $response = $this->get(sprintf(self::TEST_ITEM, $id));
-        $this->assertResponseCode(Response::HTTP_NOT_FOUND);
-
-        self::assertEquals(sprintf('Resource %s of id "%s" not found', TypeInspector::getClassName(TestItem::class), $id), $response);
+        $this->itFailsToGetNonExistent(TestItem::class);
     }
 
     public function testItFailsToGetNonExistentTestItemByInvalidId()
     {
-        $id = 'xxx';
-
-        $response = $this->get(sprintf(self::TEST_ITEM, $id));
-        $this->assertResponseCode(Response::HTTP_NOT_FOUND);
-
-        self::assertEquals('An error occurred', $response['title']);
-        self::assertEquals('Invalid identifier value or configuration.', $response['detail']);
+        $this->testItFailsToGetNonExistentByInvalidId();
     }
 }
