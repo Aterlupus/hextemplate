@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Test\Helper;
 
 use App\Core\Uuid;
+use App\Shared\Domain\AbstractDomainEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ObjectRepository;
@@ -23,7 +24,7 @@ trait EntityManagerTrait
         string $entityClass,
         array|Uuid|string $searchCriteria,
         array $orderBy = null
-    ): ?object {
+    ): ?AbstractDomainEntity {
         $searchCriteria = $this->getPreparedCriteria($searchCriteria);
         /** @var EntityRepository $entityRepository */
         $entityRepository = $this->getRepository($entityClass);
@@ -34,7 +35,7 @@ trait EntityManagerTrait
         string $entityClass,
         array|Uuid|string $searchCriteria = [],
         array $orderBy = null
-    ): object {
+    ): AbstractDomainEntity {
         $entity = $this->findEntity($entityClass, $searchCriteria, $orderBy);
         $this->validateEntity($entity, $entityClass);
 
@@ -51,7 +52,7 @@ trait EntityManagerTrait
     }
 
     protected function validateEntity(
-        ?object $entity,
+        ?AbstractDomainEntity $entity,
         string $entityClass
     ): void {
         Assert::isInstanceOf($entity, $entityClass);
