@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace Test\Functional\Test\TestItem;
 
-use App\TestItem\Domain\TestItem;
 use Symfony\Component\HttpFoundation\Response;
 use Test\Functional\AbstractGetFunctionalTest;
 
 class GetTestItemTest extends AbstractGetFunctionalTest
 {
+    use TestItemTestTrait;
+
     private const TEST_ITEM = '/api/test_items/%s.json';
 
 
@@ -19,10 +20,9 @@ class GetTestItemTest extends AbstractGetFunctionalTest
 
     public function testItGetsTestItem()
     {
-        $testItem = $this->eg->getTestItem();
-        $testItemId = $testItem->getId()->getValue();
+        $testItem = $this->createEntity();
 
-        $response = $this->get(sprintf(self::TEST_ITEM, $testItemId));
+        $response = $this->get(sprintf(self::TEST_ITEM, $testItem->getId()));
         $this->assertResponseCode(Response::HTTP_OK);
 
         self::assertEquals($testItem->getId()->getValue(), $response['id']);
@@ -33,7 +33,7 @@ class GetTestItemTest extends AbstractGetFunctionalTest
 
     public function testItFailsToGetNonExistentTestItem()
     {
-        $this->itFailsToGetNonExistent(TestItem::class);
+        $this->itFailsToGetNonExistent();
     }
 
     public function testItFailsToGetNonExistentTestItemByInvalidId()

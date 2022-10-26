@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace Test\Functional\Test\TestCollection;
 
-use App\TestCollection\Domain\TestCollection;
 use Test\Functional\AbstractPostFunctionalTest;
-use Test\Functional\RequestJson;
-use Test\Helper\Random;
 
 class PostTestCollectionTest extends AbstractPostFunctionalTest
 {
+    use TestCollectionTestTrait;
+
     private const TEST_COLLECTION = '/api/test_collections.json';
 
 
@@ -18,15 +17,9 @@ class PostTestCollectionTest extends AbstractPostFunctionalTest
         return self::TEST_COLLECTION;
     }
 
-    protected static function getPostJson(): RequestJson
-    {
-        return self::json()
-            ->set('name', Random::getString());
-    }
-
     public function testItCreatesTestCollection()
     {
-        $this->itCreates(TestCollection::class);
+        $this->itCreates();
     }
 
     public function testItFailsOnCreatingTestCollectionWithoutName()

@@ -9,19 +9,21 @@ use Test\Helper\Random;
 
 abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
 {
+    abstract protected static function getEntityClass(): string;
+
     abstract protected static function getUri(): string;
 
-    abstract protected static function getPostJson(): RequestJson;
+    abstract protected static function getEntityJson(): RequestJson;
 
-    protected function itCreates(string $entityClass): void
+    protected function itCreates(): void
     {
-        $json = static::getPostJson();
+        $json = static::getEntityJson();
 
         $response = $this->post(static::getUri(), $json);
         self::assertResponseCode(Response::HTTP_CREATED);
 
         $id = $response['id'];
-        $domainEntity = $this->findEntity($entityClass, $id);
+        $domainEntity = $this->findEntity(static::getEntityClass(), $id);
 
         self::assertNotNull($domainEntity);
         self::assertEquals($id, $domainEntity->getId()->getValue());
@@ -33,7 +35,7 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
 
     protected function itFailsOnCreatingWithoutFieldValue(string $fieldName): void
     {
-        $json = static::getPostJson()
+        $json = static::getEntityJson()
             ->remove($fieldName);
 
         $response = $this->post(static::getUri(), $json);
@@ -47,7 +49,7 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
     //TODO: Consider making call for "$minLength + 1" Random::getString to check that a little longer string works
     protected function itFailsOnCreatingWithTooShortFieldValue(string $fieldName, int $minLength): void
     {
-        $json = static::getPostJson()
+        $json = static::getEntityJson()
             ->set($fieldName, '');
 
         $response = $this->post(static::getUri(), $json);
@@ -66,7 +68,7 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
     //TODO: Consider making call for "$minLength - 1" Random::getString to check that a little shorter string works
     protected function itFailsOnCreatingWithTooLongFieldValue(string $fieldName, int $maxLength): void
     {
-        $json = static::getPostJson()
+        $json = static::getEntityJson()
             ->set($fieldName, Random::getString($maxLength + 1));
 
         $response = $this->post(static::getUri(), $json);
