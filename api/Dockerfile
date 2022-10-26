@@ -1,6 +1,8 @@
 #syntax=docker/dockerfile:1.4
 # Adapted from https://github.com/dunglas/symfony-docker
 
+#TODO: xdebug
+
 # Prod image
 FROM php:8.1-fpm-alpine AS app_php
 

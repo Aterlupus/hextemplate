@@ -13,4 +13,5 @@ return [
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
+    App\Shared\Infrastructure\Bundles\DoctrineCustomTypesRegisterer\DoctrineCustomTypesRegistererBundle::class => ['all' => true],
 ];

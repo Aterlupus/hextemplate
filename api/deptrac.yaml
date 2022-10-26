@@ -1,0 +1,55 @@
+parameters:
+    paths:
+        - ./src
+    exclude_files:
+        - '#.*test.*#'
+    layers:
+        - name: Domain
+          collectors:
+              - type: className
+                regex: .*\\Domain\\.*
+        - name: Application
+          collectors:
+              - type: className
+                regex: .*\\Application\\.*
+        - name: Infrastructure
+          collectors:
+              - type: className
+                regex: .*\\Infrastructure\\.*
+        - name: Core
+          collectors:
+              - type: className
+                regex: .*\\Core\\.*
+        - name: Symfony
+          collectors:
+              - type: className
+                regex: ^Symfony\\.*
+        - name: ApiPlatform
+          collectors:
+              - type: className
+                regex: ^ApiPlatform\\.*
+        - name: Doctrine
+          collectors:
+              - type: className
+                regex: ^Doctrine\\.*
+        - name: Webmozart
+          collectors:
+              - type: className
+                regex: ^Webmozart\\.*
+
+    ruleset:
+        Domain:
+            - Core
+        Application:
+            - Domain
+            - Core
+        Infrastructure:
+            - Domain
+            - Application
+            - Core
+            - Symfony
+            - ApiPlatform
+            - Doctrine
+        Core:
+            - Symfony
+            - Webmozart
