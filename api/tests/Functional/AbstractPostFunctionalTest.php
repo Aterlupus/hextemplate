@@ -40,12 +40,8 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
         $response = $this->post(static::getUri(), $json);
         self::assertResponseCode(Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        self::assertCount(1, $response['violations']);
-        $violation = Set::getOnly($response['violations']);
-
+        $violation = self::getOnlyViolation($response);
         self::assertEquals($fieldName, $violation['propertyPath']);
-
-
         self::assertEquals('This value should not be null.', $violation['message']);
     }
 
@@ -60,11 +56,8 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
         $response = $this->post(static::getUri(), $json);
         self::assertResponseCode(Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        self::assertCount(1, $response['violations']);
-        $violation = Set::getOnly($response['violations']);
-
+        $violation = self::getOnlyViolation($response);
         self::assertEquals($fieldName, $violation['propertyPath']);
-
         $assertedMessage = sprintf(
             'This value is too short. It should have %d character%s or more.',
             $minLength,
@@ -84,15 +77,18 @@ abstract class AbstractPostFunctionalTest extends AbstractFunctionalTest
         $response = $this->post(static::getUri(), $json);
         self::assertResponseCode(Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        self::assertCount(1, $response['violations']);
-        $violation = Set::getOnly($response['violations']);
-
+        $violation = self::getOnlyViolation($response);
         self::assertEquals($fieldName, $violation['propertyPath']);
-
         $assertedMessage = sprintf(
             'This value is too long. It should have %d characters or less.',
             $maxLength
         );
         self::assertEquals($assertedMessage, $violation['message']);
+    }
+
+    private static function getOnlyViolation(array $response)
+    {
+        self::assertCount(1, $response['violations']);
+        return Set::getOnly($response['violations']);
     }
 }
