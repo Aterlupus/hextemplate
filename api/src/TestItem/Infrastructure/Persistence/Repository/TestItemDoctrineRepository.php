@@ -24,4 +24,9 @@ class TestItemDoctrineRepository extends AbstractDoctrineRepository implements T
     {
         $this->saveEntity($testItem);
     }
+
+    public function delete(TestItem $testItem): void
+    {
+        $this->deleteEntity($testItem);
+    }
 }

@@ -24,4 +24,9 @@ class TestCollectionDoctrineRepository extends AbstractDoctrineRepository implem
     {
         $this->saveEntity($testCollection);
     }
+
+    public function delete(TestCollection $testCollection): void
+    {
+        $this->deleteEntity($testCollection);
+    }
 }

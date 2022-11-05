@@ -7,4 +7,5 @@ interface TestCollectionRepositoryInterface
 {
     public function get(TestCollectionId $testCollectionId): ?TestCollection;
     public function save(TestCollection $testCollection): void;
+    public function delete(TestCollection $testCollection): void;
 }

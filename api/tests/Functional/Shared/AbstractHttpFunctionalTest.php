@@ -6,6 +6,7 @@ namespace Test\Functional\Shared;
 use Symfony\Component\HttpFoundation\Response;
 use Test\Helper\Random;
 
+//TODO: Rework all test framework into aggregation based instead of inheritance based
 abstract class AbstractHttpFunctionalTest extends AbstractFunctionalTest
 {
     abstract protected static function getHttpMethod(): string;

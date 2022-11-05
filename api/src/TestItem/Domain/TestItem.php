@@ -9,11 +9,21 @@ use App\TestCollection\Domain\TestCollectionId; //TODO: Maybe "Ids" should be pa
 class TestItem extends AbstractDomainEntity
 {
     public function __construct(
-        protected readonly TestItemId          $id,
-        protected readonly TestItemDescription $description,
-        protected readonly TestItemAmount      $amount,
-        protected readonly TestCollectionId    $testCollectionId,
+        protected TestItemId          $id,
+        protected TestItemDescription $description,
+        protected TestItemAmount      $amount,
+        protected TestCollectionId    $testCollectionId,
     ) {}
+
+    public function update(
+        TestItemDescription $description,
+        TestItemAmount $amount,
+        TestCollectionId $testCollectionId,
+    ): void {
+        $this->description = $description;
+        $this->amount = $amount;
+        $this->testCollectionId = $testCollectionId;
+    }
 
     public function getId(): TestItemId
     {

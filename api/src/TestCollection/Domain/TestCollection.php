@@ -8,11 +8,17 @@ use App\Shared\Domain\AbstractDomainEntity;
 class TestCollection extends AbstractDomainEntity
 {
     public function __construct(
-        protected readonly TestCollectionId           $id,
-        protected readonly TestCollectionName         $name,
-        protected readonly TestCollectionTestItemsIds $testItemsIds
+        protected TestCollectionId           $id,
+        protected TestCollectionName         $name,
+        protected TestCollectionTestItemsIds $testItemsIds
     ) {
         //TODO: Assert $items to all be of class TestItemId?
+    }
+
+    public function update(
+        TestCollectionName $name
+    ): void {
+        $this->name = $name;
     }
 
     public function getId(): TestCollectionId

@@ -7,7 +7,6 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Shared\Infrastructure\ApiPlatform\State\AbstractApiPlatformDomainEntityOperator;
 use App\Shared\Infrastructure\Controller\Response\ResourceNotFoundResponse;
-use App\Shared\Infrastructure\Controller\Response\SuccessResponse;
 
 class ApiPlatformDomainEntityProvider extends AbstractApiPlatformDomainEntityOperator implements ProviderInterface
 {
@@ -19,8 +18,7 @@ class ApiPlatformDomainEntityProvider extends AbstractApiPlatformDomainEntityOpe
 
         if (null !== $entity) {
             $resourceClass = $operation->getClass();
-            $resource = $resourceClass::fromModel($entity);
-            return new SuccessResponse($resource);
+            return $resourceClass::fromModel($entity);
         } else {
             $entityClass = self::getDomainEntityClass($domain);
             return new ResourceNotFoundResponse($entityClass, (string) $id);

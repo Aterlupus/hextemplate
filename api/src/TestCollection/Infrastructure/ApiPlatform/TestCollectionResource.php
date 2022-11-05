@@ -5,6 +5,7 @@ namespace App\TestCollection\Infrastructure\ApiPlatform;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
@@ -22,11 +23,13 @@ use Symfony\Component\Validator\Constraints as Assert;
             provider: ApiPlatformDomainEntityProvider::class,
         ),
         new Post(
-            validationContext: ['groups' => ['Default']],
             processor: ApiPlatformDomainEntityProcessor::class,
         ),
         new Put(
-            validationContext: ['groups' => ['Default']],
+            provider: ApiPlatformDomainEntityProvider::class,
+            processor: ApiPlatformDomainEntityProcessor::class,
+        ),
+        new Delete(
             provider: ApiPlatformDomainEntityProvider::class,
             processor: ApiPlatformDomainEntityProcessor::class,
         )
