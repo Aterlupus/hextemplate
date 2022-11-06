@@ -7,6 +7,11 @@ use Symfony\Component\Uid\UuidV6;
 
 class Uuid extends UuidV6
 {
+    public function __construct(UuidV6|string $uuid = null)
+    {
+        parent::__construct((string) $uuid);
+    }
+
     public static function new(): self
     {
         return new self(self::string());

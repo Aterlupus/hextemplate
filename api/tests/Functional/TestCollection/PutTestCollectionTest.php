@@ -30,8 +30,6 @@ class PutTestCollectionTest extends AbstractPutFunctionalTest
 
     public function testItFailsOnUpdatingTestCollectionWithoutName()
     {
-        //TODO: Discover why PUT action with missing field is not validated
-        self::markTestSkipped('see TODO');
         $this->itFailsOnUpdatingWithoutFieldValue('name');
     }
 

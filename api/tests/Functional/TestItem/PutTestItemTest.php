@@ -24,8 +24,6 @@ class PutTestItemTest extends AbstractPutFunctionalTest
 
     public function testItFailsOnUpdatingTestItemWithoutDescription()
     {
-        //TODO: Discover why PUT action with missing field is not validated
-        self::markTestSkipped('see TODO');
         $this->itFailsOnUpdatingWithoutFieldValue('description');
     }
 
