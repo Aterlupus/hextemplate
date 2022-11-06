@@ -42,14 +42,14 @@ final class TestItemResource implements JsonSerializable
         #[ApiProperty(identifier: true, writable: false)]
         public ?Uuid $id = null,
 
-        #[Assert\NotNull(groups: ['Default'])]
-        #[Assert\Length(min: 3, max: 1024, groups: ['Default'])]
+        #[Assert\NotNull]
+        #[Assert\Length(min: 3, max: 1024)]
         public ?string $description = null,
 
-        #[Assert\NotNull(groups: ['Default'])]
+        #[Assert\NotNull]
         public ?int $amount = null,
 
-        #[Assert\NotNull(groups: ['Default'])]
+        #[Assert\NotNull]
         public ?Uuid $testCollectionId = null,
     ) {}
 

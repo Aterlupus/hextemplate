@@ -42,11 +42,11 @@ final class TestCollectionResource implements JsonSerializable
         #[ApiProperty(identifier: true, writable: false)]
         public ?Uuid $id = null,
 
-        #[Assert\NotNull(groups: ['Default'])]
-        #[Assert\Length(min: 3, max: 255, groups: ['Default'])]
+        #[Assert\NotNull]
+        #[Assert\Length(min: 3, max: 255)]
         public ?string $name = null,
 
-        #[Assert\NotNull(groups: ['Default'])]
+        #[Assert\NotNull]
         public array $testItemsIds = []
     ) {}
 
