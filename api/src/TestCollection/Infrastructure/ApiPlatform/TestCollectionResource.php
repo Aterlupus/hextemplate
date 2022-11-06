@@ -47,7 +47,7 @@ final class TestCollectionResource implements JsonSerializable
         public ?string $name = null,
 
         #[Assert\NotNull]
-        public array $testItemsIds = []
+        public ?array $testItemsIds = null
     ) {}
 
     public static function fromModel(TestCollection $testCollection): self

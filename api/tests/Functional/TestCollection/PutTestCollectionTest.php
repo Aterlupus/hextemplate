@@ -42,4 +42,9 @@ class PutTestCollectionTest extends AbstractPutFunctionalTest
     {
         $this->itFailsOnUpdatingWithTooLongFieldValue('name', 255);
     }
+
+    public function testItFailsOnUpdatingTestCollectionWithoutTestItemsIds()
+    {
+        $this->itFailsOnUpdatingWithoutFieldValue('testItemsIds');
+    }
 }

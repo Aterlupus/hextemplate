@@ -19,7 +19,8 @@ trait TestCollectionTestTrait
     protected static function getEntityJson(): RequestJson
     {
         return self::json()
-            ->set('name', Random::getString());
+            ->set('name', Random::getString())
+            ->set('testItemsIds', []);
     }
 
     protected function createEntity(): TestCollection
