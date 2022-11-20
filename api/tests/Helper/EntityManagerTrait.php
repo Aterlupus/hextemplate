@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ObjectRepository;
 use InvalidArgumentException;
+use Stringable;
 use Webmozart\Assert\Assert;
 
 trait EntityManagerTrait
@@ -22,7 +23,7 @@ trait EntityManagerTrait
 
     protected function findEntity(
         string $entityClass,
-        array|Uuid|string $searchCriteria,
+        array|Uuid|Stringable|string $searchCriteria,
         array $orderBy = null
     ): ?AbstractDomainEntity {
         $searchCriteria = $this->getPreparedCriteria($searchCriteria);
@@ -33,7 +34,7 @@ trait EntityManagerTrait
 
     protected function getEntity(
         string $entityClass,
-        array|Uuid|string $searchCriteria = [],
+        array|Uuid|Stringable|string $searchCriteria = [],
         array $orderBy = null
     ): AbstractDomainEntity {
         $entity = $this->findEntity($entityClass, $searchCriteria, $orderBy);
@@ -44,7 +45,7 @@ trait EntityManagerTrait
 
     protected function getEntities(
         string $entityClass,
-        array|Uuid|string $searchCriteria = [],
+        array|Uuid|Stringable|string $searchCriteria = [],
         array $orderBy = null
     ): array {
         $searchCriteria = $this->getPreparedCriteria($searchCriteria);
@@ -58,11 +59,15 @@ trait EntityManagerTrait
         Assert::isInstanceOf($entity, $entityClass);
     }
 
-    private static function getPreparedCriteria(array|Uuid|string $criteria): array
+    private static function getPreparedCriteria(array|Uuid|Stringable|string $criteria): array
     {
         if (is_array($criteria)) {
             return $criteria;
-        } elseif (is_string($criteria) || is_a($criteria, Uuid::class)) {
+        } elseif (
+            is_string($criteria) ||
+            is_a($criteria, Uuid::class) ||
+            is_a($criteria, Stringable::class)
+        ) {
             return ['id' => $criteria];
         } else {
             throw new InvalidArgumentException(sprintf('Invalid search criteria: %s', $criteria));
