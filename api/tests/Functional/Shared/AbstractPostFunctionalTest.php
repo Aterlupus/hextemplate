@@ -28,12 +28,11 @@ abstract class AbstractPostFunctionalTest extends AbstractHttpFunctionalTest
         $id = $response['id'];
         $domainEntity = $this->findEntity(static::getEntityClass(), $id);
 
-        self::assertNotNull($domainEntity);
-        self::assertEquals($id, $domainEntity->getId()->getValue());
-        foreach ($json->getKeys() as $fieldName) {
-            $getter = sprintf('get%s', $fieldName);
-            self::assertEquals($json->get($fieldName), $domainEntity->$getter()->getValue());
-        }
+        static::assertRequestAndEntityIdentity(
+            $id,
+            $json,
+            $domainEntity
+        );
     }
 
     protected function itFailsOnCreatingWithoutFieldValue(string $fieldName): void

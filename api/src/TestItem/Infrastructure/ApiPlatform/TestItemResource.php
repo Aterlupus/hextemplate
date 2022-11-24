@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Core\Uuid;
@@ -32,7 +33,19 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(
             provider: ApiPlatformDomainEntityProvider::class,
             processor: ApiPlatformDomainEntityProcessor::class,
-        )
+        ),
+        new Patch(
+            '/test_items/{id}/activate.{_format}',
+            name: 'activate',
+            provider: ApiPlatformDomainEntityProvider::class,
+            processor: ApiPlatformDomainEntityProcessor::class,
+        ),
+        new Patch(
+            '/test_items/{id}/deactivate.{_format}',
+            name: 'deactivate',
+            provider: ApiPlatformDomainEntityProvider::class,
+            processor: ApiPlatformDomainEntityProcessor::class,
+        ),
     ],
     routePrefix: '/api',
 )]
@@ -49,6 +62,10 @@ final class TestItemResource implements JsonSerializable
         #[Assert\NotNull]
         public ?int $amount = null,
 
+        //TODO: maybe isActive default value should be determined by Application/Domain layer?
+        #[Assert\NotNull]
+        public ?bool $isActive = true,
+
         #[Assert\NotNull]
         public ?Uuid $testCollectionId = null,
     ) {}
@@ -59,6 +76,7 @@ final class TestItemResource implements JsonSerializable
             new Uuid($testItem->getId()->getValue()),
             $testItem->getDescription()->getValue(),
             $testItem->getAmount()->getValue(),
+            $testItem->getIsActive()->getValue(),
             new Uuid($testItem->getTestCollectionId()->getValue()),
         );
     }
@@ -69,6 +87,7 @@ final class TestItemResource implements JsonSerializable
             'id' => $this->id,
             'description' => $this->description,
             'amount' => $this->amount,
+            'isActive' => $this->isActive,
             'testCollectionId' => $this->testCollectionId,
         ];
     }

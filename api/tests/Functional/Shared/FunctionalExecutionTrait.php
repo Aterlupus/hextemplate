@@ -29,7 +29,7 @@ trait FunctionalExecutionTrait
         $headers = null !== $headers ? static::getClientHeaders($headers) : [];
         $server = array_merge(
             [
-                'CONTENT_TYPE' => 'application/json',
+                'CONTENT_TYPE' => HttpMethodToContentTypeAssocSuit::getValue($method),
                 'HTTPS' => true
             ],
             $headers

@@ -21,29 +21,6 @@ abstract class AbstractPutFunctionalTest extends AbstractHttpFunctionalTest
         return 'PUT';
     }
 
-    protected static function assertRequestAndEntityIdentity(
-        string $id,
-        RequestJson $json,
-        AbstractDomainEntity $domainEntity
-    ): void {
-        self::assertNotNull($domainEntity);
-        self::assertEquals($id, $domainEntity->getId()->getValue());
-
-        $jsonKeys = $json->getKeys();
-        $entityKeys = array_keys($domainEntity->jsonSerialize());
-        $remainingKeys = array_diff($entityKeys, $jsonKeys, ['id']);
-
-        foreach ($jsonKeys as $fieldName) {
-            $getter = sprintf('get%s', $fieldName);
-            self::assertEquals($json->get($fieldName), $domainEntity->$getter()->getValue());
-        }
-
-        foreach ($remainingKeys as $fieldName) {
-            $getter = sprintf('get%s', $fieldName);
-            self::assertEmpty($domainEntity->$getter()->getValue());
-        }
-    }
-
     protected function itUpdates(): void
     {
         $entityId = $this->createEntity()->getId();

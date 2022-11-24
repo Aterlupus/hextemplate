@@ -22,6 +22,7 @@ class UpdateTestItemCommandHandler implements CommandHandlerInterface
     public function __invoke(UpdateTestItemCommand $command): void
     {
         $testItem = $this->testItemRepository->get(new TestItemId($command->getId()));
+        //TODO: create proper assert for Entity existence
         Assert::notNull($testItem, sprintf("Entity %s of id %s not found. %s", TestItem::class, $command->getId(), StackTraceHelper::getStackTraceMessage()));
 
         $testItem->update(

@@ -5,6 +5,7 @@ namespace App\TestItem\Domain;
 
 use App\Shared\Domain\AbstractDomainEntity;
 use App\TestCollection\Domain\TestCollectionId; //TODO: Maybe "Ids" should be part of shared directory?
+use Webmozart\Assert\Assert;
 
 class TestItem extends AbstractDomainEntity
 {
@@ -12,6 +13,7 @@ class TestItem extends AbstractDomainEntity
         protected TestItemId          $id,
         protected TestItemDescription $description,
         protected TestItemAmount      $amount,
+        protected TestItemIsActive    $isActive,
         protected TestCollectionId    $testCollectionId,
     ) {}
 
@@ -23,6 +25,18 @@ class TestItem extends AbstractDomainEntity
         $this->description = $description;
         $this->amount = $amount;
         $this->testCollectionId = $testCollectionId;
+    }
+
+    public function activate(): void
+    {
+        Assert::false($this->getIsActive()->getValue());
+        $this->isActive = new TestItemIsActive(true);
+    }
+
+    public function deactivate(): void
+    {
+        Assert::true($this->getIsActive()->getValue());
+        $this->isActive = new TestItemIsActive(false);
     }
 
     public function getId(): TestItemId
@@ -38,6 +52,11 @@ class TestItem extends AbstractDomainEntity
     public function getAmount(): TestItemAmount
     {
         return $this->amount;
+    }
+
+    public function getIsActive(): TestItemIsActive
+    {
+        return $this->isActive;
     }
 
     public function getTestCollectionId(): TestCollectionId

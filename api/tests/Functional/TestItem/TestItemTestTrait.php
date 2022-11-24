@@ -23,9 +23,17 @@ trait TestItemTestTrait
             ->set('testCollectionId', Uuid::string());
     }
 
-    protected function createEntity(): TestItem
+    //TODO: bad sign, maybe whole thing should be replaced by some "expectation" classes?
+    protected static function getDefaultFieldsValues(): array
+    {
+        return [
+            'isActive' => true
+        ];
+    }
+
+    protected function createEntity(array $values = []): TestItem
     {
         //TODO: eg?
-        return $this->eg->getTestItem();
+        return $this->eg->getTestItem($values);
     }
 }

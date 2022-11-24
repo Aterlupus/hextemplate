@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Test\Functional\Shared;
 
+use App\Shared\Domain\AbstractDomainEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Test\Helper\Random;
 
@@ -12,6 +13,11 @@ abstract class AbstractHttpFunctionalTest extends AbstractFunctionalTest
     abstract protected static function getHttpMethod(): string;
 
     abstract protected static function getEntityJson(): RequestJson;
+
+    protected static function getDefaultFieldsValues(): array
+    {
+        return [];
+    }
 
     protected function itFailsOnActingWithoutFieldValue(string $uri, string $fieldName)
     {
@@ -52,5 +58,59 @@ abstract class AbstractHttpFunctionalTest extends AbstractFunctionalTest
         $violation = self::getOnlyViolation($response);
         self::assertEquals($fieldName, $violation['propertyPath']);
         self::assertEquals(ViolationMessageHelper::isTooLong($maxLength), $violation['message']);
+    }
+
+    protected static function assertRequestAndEntityIdentity(
+        string $id,
+        RequestJson $json,
+        AbstractDomainEntity $domainEntity
+    ): void {
+        self::assertNotNull($domainEntity);
+        self::assertEquals($id, $domainEntity->getId()->getValue());
+
+        $jsonKeys = $json->getKeys();
+        $entityKeys = array_keys($domainEntity->jsonSerialize());
+        $defaultedKeys = array_keys(static::getDefaultFieldsValues());
+        $remainingKeys = array_diff($entityKeys, $jsonKeys, $defaultedKeys, ['id']);
+
+        foreach ($jsonKeys as $fieldName) {
+            $getter = sprintf('get%s', $fieldName);
+            self::assertEquals($json->get($fieldName), $domainEntity->$getter()->getValue());
+        }
+
+        foreach ($defaultedKeys as $fieldName) {
+            $getter = sprintf('get%s', $fieldName);
+            self::assertEquals(static::getDefaultFieldsValues()[$fieldName], $domainEntity->$getter()->getValue());
+        }
+
+        foreach ($remainingKeys as $fieldName) {
+            $getter = sprintf('get%s', $fieldName);
+            self::assertEmpty($domainEntity->$getter()->getValue());
+        }
+    }
+
+    protected static function assertResponseAndEntityIdentity(
+        array $response,
+        AbstractDomainEntity $domainEntity
+    ): void {
+        self::assertNotNull($domainEntity);
+        self::assertEquals($response['id'], $domainEntity->getId()->getValue());
+
+        $jsonKeys = array_keys($response);
+        $entityKeys = array_keys($domainEntity->jsonSerialize());
+        $defaultedKeys = array_keys(static::getDefaultFieldsValues());
+        $remainingKeys = array_diff($entityKeys, $jsonKeys, $defaultedKeys, ['id']);
+
+        foreach ($jsonKeys as $fieldName) {
+            $getter = sprintf('get%s', $fieldName);
+            self::assertEquals($response[$fieldName], $domainEntity->$getter()->getValue());
+        }
+
+        //Defaults are not tested, since this isn't necessarily creation case
+
+        foreach ($remainingKeys as $fieldName) {
+            $getter = sprintf('get%s', $fieldName);
+            self::assertEmpty($domainEntity->$getter()->getValue());
+        }
     }
 }

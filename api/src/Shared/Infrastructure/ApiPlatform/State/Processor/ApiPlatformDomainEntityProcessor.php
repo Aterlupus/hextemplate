@@ -32,7 +32,7 @@ class ApiPlatformDomainEntityProcessor extends AbstractApiPlatformDomainEntityOp
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): ?AbstractDomainEntity
     {
         $domain = $operation->getShortName();
-        $action = self::getActionForMethod($operation->getMethod());
+        $action = self::getActionForMethod($operation);
 
         $commandClass = self::getEntityCommandClass($domain, $action);
         $command = $commandClass::createFromArray($data->jsonSerialize());
@@ -41,9 +41,11 @@ class ApiPlatformDomainEntityProcessor extends AbstractApiPlatformDomainEntityOp
         return $this->getDomainEntity($domain, $command->getId());
     }
 
-    private static function getActionForMethod(string $httpMethod): string
+    private static function getActionForMethod(Operation $operation): string
     {
-        return self::METHOD_TO_ACTION[$httpMethod];
+        return
+            self::METHOD_TO_ACTION[$operation->getMethod()] ??
+            ucfirst($operation->getName());
     }
 
     private static function getEntityCommandClass(string $domain, string $action): CommandInterface|string

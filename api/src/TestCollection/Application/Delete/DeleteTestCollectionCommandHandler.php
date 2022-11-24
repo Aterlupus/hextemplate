@@ -15,6 +15,7 @@ class DeleteTestCollectionCommandHandler implements CommandHandlerInterface
 
     public function __invoke(DeleteTestCollectionCommand $command): void
     {
+        //TODO: create proper assert for Entity existence
         $testCollection = $this->testCollectionRepository->get(new TestCollectionId($command->getId()));
 
         $this->testCollectionRepository->delete($testCollection);

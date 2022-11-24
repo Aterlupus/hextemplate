@@ -13,6 +13,7 @@ class CreateTestItemCommand implements CommandInterface, CreatableFromArrayInter
         private readonly string $id,
         private readonly string $description,
         private readonly int $amount,
+        private readonly bool $isActive,
         private readonly string $testCollectionId
     ) {}
 
@@ -22,6 +23,7 @@ class CreateTestItemCommand implements CommandInterface, CreatableFromArrayInter
             Uuid::string(),
             $data['description'],
             $data['amount'],
+            $data['isActive'],
             (string) $data['testCollectionId']
         );
     }
@@ -39,6 +41,11 @@ class CreateTestItemCommand implements CommandInterface, CreatableFromArrayInter
     public function getAmount(): int
     {
         return $this->amount;
+    }
+
+    public function getIsActive(): bool
+    {
+        return $this->isActive;
     }
 
     public function getTestCollectionId(): string
