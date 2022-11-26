@@ -5,11 +5,18 @@ namespace Test\Functional\Shared;
 
 use App\Core\Suit\ResponseCodesSuit;
 use App\Core\Format\StackTraceFormatter;
+use App\Core\Util\TypeInspector;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 trait FunctionalExecutionTrait
 {
+    private ?Exception $erroneousResponse = null;
+
+    private bool $catchException = true;
+
+
     abstract protected function getClientBrowser(): KernelBrowser;
 
     protected static function json(): RequestJson
@@ -24,6 +31,7 @@ trait FunctionalExecutionTrait
         ?array $files = null,
         ?array $headers = null
     ): mixed {
+        $this->erroneousResponse = null;
         $body = null !== $jsonRequest ? (string) $jsonRequest : null;
         $files = null !== $files ? $files : [];
         $headers = null !== $headers ? static::getClientHeaders($headers) : [];
@@ -35,9 +43,14 @@ trait FunctionalExecutionTrait
             $headers
         );
 
-        static::getClientBrowser()->request(
-            $method, $route, [], $files, $server, $body
-        );
+        try {
+            static::getClientBrowser()->catchExceptions($this->catchException);
+            static::getClientBrowser()->request(
+                $method, $route, [], $files, $server, $body
+            );
+        } catch (Exception $e) {
+            $this->erroneousResponse = $e;
+        }
 
         return $this->getResponseJson();
     }
@@ -69,14 +82,21 @@ trait FunctionalExecutionTrait
 
     protected function getResponseJson()
     {
-        $content = static::getClientBrowser()->getResponse()->getContent();
-
-        return json_decode($content, true);
+        if (null === $this->erroneousResponse) {
+            $content = static::getClientBrowser()->getResponse()->getContent();
+            return json_decode($content, true);
+        } else {
+            return $this->erroneousResponse;
+        }
     }
 
     protected function getResponseCode(): int
     {
-        return static::getClientBrowser()->getResponse()->getStatusCode();
+        if (null !== $this->erroneousResponse) {
+            return -1; //TODO: Unknown, since ignored exception doesn't resolve to status code. Reconsider
+        } else {
+            return static::getClientBrowser()->getResponse()->getStatusCode();
+        }
     }
 
     protected function getResponseHeaders(): ResponseHeaderBag
@@ -112,20 +132,31 @@ trait FunctionalExecutionTrait
 
     protected function throwError(): never
     {
-        $response = $this->getResponseJson();
-        if (isset($response['trace'])) {
-            dump($response['detail']);
-            die(StackTraceFormatter::format($response['trace']));
-        } else if (isset($response['status'])) {
-            dump($response);
-            dd(sprintf('Execution finished with %d status code', $response['status']));
-        } else if (null === $response) {
-            dd($response);
-        } else if (is_string($response)) {
-            dd(sprintf('Response message for code %d: %s', $this->getResponseCode(), $response));
+        if (null !== $this->erroneousResponse) {
+            $exception = $this->erroneousResponse;
+            do {
+                dump(sprintf('Exception %s caught with message: "%s" and StackTrace:', TypeInspector::getClassName($exception), $exception->getMessage()));
+                dump(StackTraceFormatter::format($exception->getTrace()));
+                $exception = $exception->getPrevious();
+            } while (null !== $exception);
+            die;
         } else {
-            dump($response);
-            die('unknown response format passed to throwError');
+            $response = $this->getResponseJson();
+
+            if (isset($response['trace'])) {
+                dump($response['detail']);
+                die(StackTraceFormatter::format($response['trace']));
+            } else if (isset($response['status'])) {
+                dump($response);
+                dd(sprintf('Execution finished with %d status code', $response['status']));
+            } else if (null === $response) {
+                dd($response);
+            } else if (is_string($response)) {
+                dd(sprintf('Response message for code %d: %s', $this->getResponseCode(), $response));
+            } else {
+                dump($response);
+                die('unknown response format passed to throwError');
+            }
         }
     }
 
@@ -139,5 +170,10 @@ trait FunctionalExecutionTrait
         } else {
             var_dump(sprintf('Remaining %s call', __METHOD__));
         }
+    }
+
+    public function setCatchException(bool $catchException): void
+    {
+        $this->catchException = $catchException;
     }
 }

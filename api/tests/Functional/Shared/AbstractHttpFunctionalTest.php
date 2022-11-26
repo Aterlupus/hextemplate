@@ -12,7 +12,7 @@ abstract class AbstractHttpFunctionalTest extends AbstractFunctionalTest
 {
     abstract protected static function getHttpMethod(): string;
 
-    abstract protected static function getEntityJson(): RequestJson;
+    abstract protected function getEntityJson(): RequestJson;
 
     protected static function getDefaultFieldsValues(): array
     {
@@ -21,7 +21,7 @@ abstract class AbstractHttpFunctionalTest extends AbstractFunctionalTest
 
     protected function itFailsOnActingWithoutFieldValue(string $uri, string $fieldName)
     {
-        $json = static::getEntityJson()
+        $json = $this->getEntityJson()
             ->remove($fieldName);
 
         $response = $this->executeRequest(static::getHttpMethod(), $uri, $json);
@@ -35,7 +35,7 @@ abstract class AbstractHttpFunctionalTest extends AbstractFunctionalTest
     //TODO: Consider making call for "$minLength + 1" Random::getString to check that a little longer string works
     protected function itFailsOnActingWithTooShortFieldValue(string $uri, string $fieldName, int $minLength)
     {
-        $json = static::getEntityJson()
+        $json = $this->getEntityJson()
             ->set($fieldName, '');
 
         $response = $this->executeRequest(static::getHttpMethod(), $uri, $json);
@@ -49,7 +49,7 @@ abstract class AbstractHttpFunctionalTest extends AbstractFunctionalTest
     //TODO: Consider making call for "$minLength - 1" Random::getString to check that a little shorter string works
     protected function itFailsOnActingWithTooLongFieldValue(string $uri, string $fieldName, int $maxLength): void
     {
-        $json = static::getEntityJson()
+        $json = $this->getEntityJson()
             ->set($fieldName, Random::getString($maxLength + 1));
 
         $response = $this->executeRequest(static::getHttpMethod(), $uri, $json);

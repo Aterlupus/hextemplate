@@ -12,7 +12,7 @@ abstract class AbstractPutFunctionalTest extends AbstractHttpFunctionalTest
 
     abstract protected static function getUri(): string;
 
-    abstract protected static function getEntityJson(): RequestJson;
+    abstract protected function getEntityJson(): RequestJson;
 
     abstract protected function createEntity(): AbstractDomainEntity;
 
@@ -24,7 +24,7 @@ abstract class AbstractPutFunctionalTest extends AbstractHttpFunctionalTest
     protected function itUpdates(): void
     {
         $entityId = $this->createEntity()->getId();
-        $json = static::getEntityJson();
+        $json = $this->getEntityJson();
 
         $url = sprintf(static::getUri(), $entityId);
         $response = $this->put($url, $json);

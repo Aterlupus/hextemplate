@@ -16,7 +16,7 @@ trait TestCollectionTestTrait
         return TestCollection::class;
     }
 
-    protected static function getEntityJson(): RequestJson
+    protected function getEntityJson(): RequestJson
     {
         return self::json()
             ->set('name', Random::getString())

@@ -11,7 +11,7 @@ abstract class AbstractPostFunctionalTest extends AbstractHttpFunctionalTest
 
     abstract protected static function getUri(): string;
 
-    abstract protected static function getEntityJson(): RequestJson;
+    abstract protected function getEntityJson(): RequestJson;
 
     protected static function getHttpMethod(): string
     {
@@ -20,7 +20,7 @@ abstract class AbstractPostFunctionalTest extends AbstractHttpFunctionalTest
 
     protected function itCreates(): void
     {
-        $json = static::getEntityJson();
+        $json = $this->getEntityJson();
 
         $response = $this->post(static::getUri(), $json);
         self::assertResponseCode(Response::HTTP_CREATED);

@@ -3,25 +3,26 @@ declare(strict_types=1);
 
 namespace App\TestCollection\Application\Update;
 
-use App\Core\Util\StackTraceHelper;
-use App\Shared\Application\CQRS\CommandHandlerInterface;
+use App\Shared\Application\CQRS\AbstractCommandHandler;
+use App\Shared\Domain\MissingEntityException;
 use App\TestCollection\Domain\TestCollection;
 use App\TestCollection\Domain\TestCollectionId;
 use App\TestCollection\Domain\TestCollectionName;
 use App\TestCollection\Domain\TestCollectionRepositoryInterface;
-use Webmozart\Assert\Assert;
 
-class UpdateTestCollectionCommandHandler implements CommandHandlerInterface
+class UpdateTestCollectionCommandHandler extends AbstractCommandHandler
 {
     public function __construct(
         private readonly TestCollectionRepositoryInterface $testCollectionRepository
     ) {}
 
+    /**
+     * @throws MissingEntityException
+     */
     public function __invoke(UpdateTestCollectionCommand $command): void
     {
         $testCollection = $this->testCollectionRepository->get(new TestCollectionId($command->getId()));
-        //TODO: create proper assert for Entity existence
-        Assert::notNull($testCollection, sprintf("Entity %s of id %s not found. %s", TestCollection::class, $command->getId(), StackTraceHelper::getStackTraceMessage()));
+        self::assertEntityNotNull($command->getId(), TestCollection::class, $testCollection);
 
         $testCollection->update(
             new TestCollectionName($command->getName())
