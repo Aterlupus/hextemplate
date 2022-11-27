@@ -16,7 +16,7 @@ class RegexTest extends AbstractUnitTest
         $matches = Regex::getRegexMatches($string, $pattern);
 
         self::assertCount(2, $matches);
-        self::assertEquals('address.com', $matches[0]);
+        self::assertEquals('https://address.com', $matches[0]);
         self::assertEquals('Address', $matches[1]);
     }
 
@@ -26,7 +26,7 @@ class RegexTest extends AbstractUnitTest
         $string = '<a href="https://address.com" title="Address"></a>';
         $match = Regex::getOnlyRegexMatch($string, $pattern);
 
-        self::assertEquals('address.com', $match);
+        self::assertEquals('https://address.com', $match);
     }
 
     public function testGetOnlyRegexMatchFailsOnMultipleMatches()
