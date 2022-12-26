@@ -69,9 +69,10 @@ abstract class AbstractAssocSuit extends AbstractSuit
      */
     public static function getConvertedValues(array $keys): array
     {
-        return array_map(function($key) {
-            return static::getValue($key);
-        }, $keys);
+        return array_map(
+            fn($key) => static::getValue($key),
+            $keys
+        );
     }
 
     /**
@@ -94,7 +95,7 @@ abstract class AbstractAssocSuit extends AbstractSuit
      */
     public static function assertHasKey($key): void
     {
-        if(false === self::hasKey($key)) {
+        if (false === self::hasKey($key)) {
             static::throwInvalidSuitKeyException($key);
         }
     }

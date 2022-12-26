@@ -8,8 +8,8 @@ use App\Shared\Domain\AbstractDomainEntity;
 class TestCollection extends AbstractDomainEntity
 {
     public function __construct(
-        protected TestCollectionId           $id,
-        protected TestCollectionName         $name,
+        protected TestCollectionId $id,
+        protected TestCollectionName $name,
         protected TestCollectionTestItemsIds $testItemsIds
     ) {
         //TODO: Assert $items to all be of class TestItemId?

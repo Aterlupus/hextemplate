@@ -9,7 +9,7 @@ class Regex
 {
     public static function getRegexMatches(string $content, string $pattern): array
     {
-        preg_match_all($pattern, $content,$matches, PREG_PATTERN_ORDER);
+        preg_match_all($pattern, $content, $matches, PREG_PATTERN_ORDER);
 
         return $matches[1];
     }

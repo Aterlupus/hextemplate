@@ -12,11 +12,11 @@ use Webmozart\Assert\Assert;
 class TestItem extends AbstractDomainEntity
 {
     public function __construct(
-        protected TestItemId          $id,
+        protected TestItemId $id,
         protected TestItemDescription $description,
-        protected TestItemAmount      $amount,
-        protected TestItemIsActive    $isActive,
-        protected TestCollectionId    $testCollectionId,
+        protected TestItemAmount $amount,
+        protected TestItemIsActive $isActive,
+        protected TestCollectionId $testCollectionId,
     ) {}
 
     public function update(

@@ -36,7 +36,7 @@ class StackTraceHelper
     private static function pruneDebugFromBacktrace(array $backtrace): array
     {
         foreach ($backtrace as $index => $row) {
-            if (array_key_exists('class', $row) && in_array($row['function'], self::DEBUG_METHODS) ) {
+            if (array_key_exists('class', $row) && in_array($row['function'], self::DEBUG_METHODS)) {
                 unset($backtrace[$index]);
             }
         }

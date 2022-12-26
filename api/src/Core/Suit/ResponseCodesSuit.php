@@ -13,7 +13,7 @@ class ResponseCodesSuit extends AbstractConstantsSuit
         Response::HTTP_PROCESSING,
         Response::HTTP_EARLY_HINTS
     ];
-    
+
     const SUCCESS = [
         Response::HTTP_OK,
         Response::HTTP_CREATED,
@@ -26,7 +26,7 @@ class ResponseCodesSuit extends AbstractConstantsSuit
         Response::HTTP_ALREADY_REPORTED,
         Response::HTTP_IM_USED
     ];
-    
+
     const REDIRECTION = [
         Response::HTTP_MULTIPLE_CHOICES,
         Response::HTTP_MOVED_PERMANENTLY,

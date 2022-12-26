@@ -16,7 +16,7 @@ abstract class UuidType extends StringType implements DoctrineCustomTypeInterfac
     public function getName(): string
     {
         $className = Set::getLast(explode('\\', $this->getTypeClass()));
-        $parts = preg_split('#(?=[A-Z])#', $className, flags:PREG_SPLIT_NO_EMPTY);
+        $parts = preg_split('#(?=[A-Z])#', $className, flags: PREG_SPLIT_NO_EMPTY);
         $parts = array_map(
             fn(string $part) => strtolower($part),
             $parts

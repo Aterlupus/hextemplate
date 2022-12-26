@@ -55,7 +55,7 @@ class DoctrineCustomTypesRegisterer
     private static function getCachedTypes(): array
     {
         $types = [];
-        for ($typeId = 1;;$typeId++) {
+        for ($typeId = 1; ; $typeId++) {
             $type = self::cacheGet(self::getTypeCacheKey($typeId));
 
             if (false === $type instanceof CacheItem) {
