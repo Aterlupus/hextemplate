@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\TestItem\Domain;
 
 use App\Shared\Domain\AbstractDomainEntity;
-use App\TestCollection\Domain\TestCollectionId; //TODO: Maybe "Ids" should be part of shared directory?
+
+//TODO: Maybe "Ids" should be part of shared directory?
+use App\TestCollection\Domain\TestCollectionId;
 use Webmozart\Assert\Assert;
 
 class TestItem extends AbstractDomainEntity
