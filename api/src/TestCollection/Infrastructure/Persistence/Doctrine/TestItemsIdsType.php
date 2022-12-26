@@ -19,7 +19,7 @@ class TestItemsIdsType extends JsonType implements DoctrineCustomTypeInterface
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): mixed
     {
         $value = array_map(
-            fn (TestItemId $id) => $id->getValue(),
+            fn(TestItemId $id) => $id->getValue(),
             $value
         );
 
