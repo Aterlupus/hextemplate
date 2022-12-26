@@ -5,7 +5,7 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <embeddable name="App\TestItem\Domain\TestItemAmount">
-        <field name="value" type="integer" column="amount" />
+        <field name="value" type="integer" column="amount"/>
     </embeddable>
 
 </doctrine-mapping>

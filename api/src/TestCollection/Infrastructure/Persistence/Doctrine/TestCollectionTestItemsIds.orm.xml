@@ -5,7 +5,7 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <embeddable name="App\TestCollection\Domain\TestCollectionTestItemsIds">
-        <field name="value" type="json" column="test_items_ids" />
+        <field name="value" type="json" column="test_items_ids"/>
     </embeddable>
 
 </doctrine-mapping>

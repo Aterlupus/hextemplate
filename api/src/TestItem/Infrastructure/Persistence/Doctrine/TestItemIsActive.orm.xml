@@ -5,7 +5,7 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <embeddable name="App\TestItem\Domain\TestItemIsActive">
-        <field name="value" type="boolean" column="isActive" />
+        <field name="value" type="boolean" column="isActive"/>
     </embeddable>
 
 </doctrine-mapping>

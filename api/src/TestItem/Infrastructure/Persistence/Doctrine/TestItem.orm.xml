@@ -5,11 +5,11 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\TestItem\Domain\TestItem" table="test_item">
-        <id name="id" type="test_item_id" column="id" length="36" />
-        <embedded name="description" class="App\TestItem\Domain\TestItemDescription" use-column-prefix="false" />
-        <embedded name="amount" class="App\TestItem\Domain\TestItemAmount" use-column-prefix="false" />
-        <embedded name="isActive" class="App\TestItem\Domain\TestItemIsActive" use-column-prefix="false" />
-        <field name="testCollectionId" type="test_collection_id" column="test_collection_id" />
+        <id name="id" type="test_item_id" column="id" length="36"/>
+        <embedded name="description" class="App\TestItem\Domain\TestItemDescription" use-column-prefix="false"/>
+        <embedded name="amount" class="App\TestItem\Domain\TestItemAmount" use-column-prefix="false"/>
+        <embedded name="isActive" class="App\TestItem\Domain\TestItemIsActive" use-column-prefix="false"/>
+        <field name="testCollectionId" type="test_collection_id" column="test_collection_id"/>
     </entity>
 
 </doctrine-mapping>

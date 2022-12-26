@@ -5,9 +5,9 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\TestCollection\Domain\TestCollection" table="test_collection">
-        <id name="id" type="test_collection_id" column="id" length="36" />
-        <embedded name="name" class="App\TestCollection\Domain\TestCollectionName" use-column-prefix="false" />
-        <embedded name="testItemsIds" class="App\TestCollection\Domain\TestCollectionTestItemsIds" use-column-prefix="false" />
+        <id name="id" type="test_collection_id" column="id" length="36"/>
+        <embedded name="name" class="App\TestCollection\Domain\TestCollectionName" use-column-prefix="false"/>
+        <embedded name="testItemsIds" class="App\TestCollection\Domain\TestCollectionTestItemsIds" use-column-prefix="false"/>
     </entity>
 
 </doctrine-mapping>
