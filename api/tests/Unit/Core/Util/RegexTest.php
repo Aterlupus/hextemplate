@@ -42,4 +42,24 @@ class RegexTest extends AbstractUnitTest
 
         self::fail(sprintf('Should\'ve failed with %s exception', InvalidArgumentException::class));
     }
+
+    public function testItReplaces()
+    {
+        $pattern = '(bb)';
+        $string = 'aabbcc';
+
+        $newString = Regex::replace($string, $pattern, 'xx');
+
+        self::assertEquals('aaxxcc', $newString);
+    }
+
+    public function testItReplacesWithGroup()
+    {
+        $pattern = '(bb)';
+        $string = 'aabbcc';
+
+        $newString = Regex::replace($string, $pattern, 'x${0}x');
+
+        self::assertEquals('aaxbbxcc', $newString);
+    }
 }

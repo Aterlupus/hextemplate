@@ -21,4 +21,9 @@ class Regex
 
         return Set::getOnly($matches);
     }
+
+    public static function replace(string $content, string $pattern, string $replacement): string
+    {
+        return preg_replace($pattern, $replacement, $content);
+    }
 }
