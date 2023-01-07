@@ -9,19 +9,7 @@ doctrine:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
-        mappings:
-            TestItem:
-                is_bundle: false
-                type: xml
-                dir: '%kernel.project_dir%/src/TestItem/Infrastructure/Persistence/Doctrine/'
-                prefix: 'App\TestItem\Domain'
-                alias: App\TestItem\Domain
-            TestCollection:
-                is_bundle: false
-                type: xml
-                dir: '%kernel.project_dir%/src/TestCollection/Infrastructure/Persistence/Doctrine/'
-                prefix: 'App\TestCollection\Domain'
-                alias: App\TestCollection\Domain
+#       mappings: realized by doctrine.php
 
 when@test:
     doctrine:
