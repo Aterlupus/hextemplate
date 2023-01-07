@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Shared\Application\CQRS;
 
 use App\Shared\Domain\AbstractDomainEntity;
-use App\Shared\Domain\MissingEntityException;
+use App\Shared\Application\Exception\MissingEntityException;
 
 abstract class AbstractCommandHandler implements CommandHandlerInterface
 {

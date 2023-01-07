@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\TestItem\Application\Update;
 
 use App\Shared\Application\CQRS\AbstractCommandHandler;
-use App\Shared\Domain\MissingEntityException;
+use App\Shared\Application\Exception\MissingEntityException;
 use App\TestCollection\Domain\TestCollectionId;
 use App\TestItem\Domain\TestItem;
 use App\TestItem\Domain\TestItemAmount;

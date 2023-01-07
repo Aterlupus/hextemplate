@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\TestItem\Application\Delete;
 
 use App\Shared\Application\CQRS\AbstractCommandHandler;
-use App\Shared\Domain\MissingEntityException;
+use App\Shared\Application\Exception\MissingEntityException;
 use App\TestItem\Domain\TestItem;
 use App\TestItem\Domain\TestItemId;
 use App\TestItem\Domain\TestItemRepositoryInterface;
