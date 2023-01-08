@@ -27,7 +27,7 @@ class PutTestItemTest extends AbstractPutFunctionalTest
         $this->itFailsOnUpdatingWithoutFieldValue('description');
     }
 
-    public function testItFailsOnUpdatingTestItemWithEmptyDescription()
+    public function testItFailsOnUpdatingTestItemWithTooShortDescription()
     {
         $this->itFailsOnUpdatingWithTooShortFieldValue('description', 3);
     }
