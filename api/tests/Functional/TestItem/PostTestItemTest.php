@@ -27,7 +27,7 @@ class PostTestItemTest extends AbstractPostFunctionalTest
         $this->itFailsOnCreatingWithoutFieldValue('description');
     }
 
-    public function testItFailsOnCreatingTestItemWithEmptyDescription()
+    public function testItFailsOnCreatingTestItemWithTooShortDescription()
     {
         $this->itFailsOnCreatingWithTooShortFieldValue('description', 3);
     }
