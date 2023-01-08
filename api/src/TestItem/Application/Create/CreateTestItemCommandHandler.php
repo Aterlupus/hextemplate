@@ -10,6 +10,7 @@ use App\TestCollection\Domain\TestCollectionId;
 use App\TestCollection\Domain\TestCollectionRepositoryInterface;
 use App\TestItem\Domain\TestItem;
 use App\TestItem\Domain\TestItemAmount;
+use App\TestItem\Domain\TestItemComment;
 use App\TestItem\Domain\TestItemDescription;
 use App\TestItem\Domain\TestItemId;
 use App\TestItem\Domain\TestItemIsActive;
@@ -35,6 +36,7 @@ class CreateTestItemCommandHandler extends AbstractCommandHandler
             new TestItemDescription($command->getDescription()),
             new TestItemAmount($command->getAmount()),
             new TestItemIsActive($command->getIsActive()),
+            new TestItemComment($command->getComment()),
             new TestCollectionId($command->getTestCollectionId())
         );
 

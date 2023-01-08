@@ -5,6 +5,7 @@ namespace App\Shared\Infrastructure\ApiPlatform\State\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
+use App\Core\Util\StringParser;
 use App\Shared\Application\CQRS\CommandBusInterface;
 use App\Shared\Application\CQRS\CommandInterface;
 use App\Shared\Application\CQRS\QueryBusInterface;
@@ -43,9 +44,16 @@ class ApiPlatformDomainEntityProcessor extends AbstractApiPlatformDomainEntityOp
 
     private static function getActionForMethod(Operation $operation): string
     {
-        return
-            self::METHOD_TO_ACTION[$operation->getMethod()] ??
-            ucfirst($operation->getName());
+        if (self::isDefaultName($operation->getName())) {
+            return self::METHOD_TO_ACTION[$operation->getMethod()];
+        } else {
+            return ucfirst($operation->getName());
+        }
+    }
+
+    private static function isDefaultName(string $operationName): bool
+    {
+        return StringParser::startsWith($operationName, '_');
     }
 
     private static function getEntityCommandClass(string $domain, string $action): CommandInterface|string

@@ -9,6 +9,7 @@
         <embedded name="description" class="App\TestItem\Domain\TestItemDescription" use-column-prefix="false"/>
         <embedded name="amount" class="App\TestItem\Domain\TestItemAmount" use-column-prefix="false"/>
         <embedded name="isActive" class="App\TestItem\Domain\TestItemIsActive" use-column-prefix="false"/>
+        <embedded name="comment" class="App\TestItem\Domain\TestItemComment" use-column-prefix="false"/>
         <field name="testCollectionId" type="test_collection_id" column="test_collection_id"/>
     </entity>
 

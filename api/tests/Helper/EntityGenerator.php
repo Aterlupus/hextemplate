@@ -9,6 +9,7 @@ use App\TestCollection\Domain\TestCollectionName;
 use App\TestCollection\Domain\TestCollectionTestItemsIds;
 use App\TestItem\Domain\TestItem;
 use App\TestItem\Domain\TestItemAmount;
+use App\TestItem\Domain\TestItemComment;
 use App\TestItem\Domain\TestItemDescription;
 use App\TestItem\Domain\TestItemId;
 use App\TestItem\Domain\TestItemIsActive;
@@ -28,6 +29,7 @@ class EntityGenerator
             new TestItemDescription(Random::getString(200)),
             new TestItemAmount(Random::getPositiveInteger(500)),
             $values['isActive'] ?? new TestItemIsActive(true),
+            new TestItemComment(null),
             isset($values['testCollection']) ? $values['testCollection']->getId() : $this->getTestCollection()->getId(),
         );
 

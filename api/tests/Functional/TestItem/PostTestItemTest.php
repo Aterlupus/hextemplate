@@ -36,4 +36,11 @@ class PostTestItemTest extends AbstractPostFunctionalTest
     {
         $this->itFailsOnCreatingWithTooLongFieldValue('description', 1024);
     }
+
+    public function testItFailsOnCreatingTestItemWithTooShortComment()
+    {
+        $this->itFailsOnCreatingWithTooShortFieldValue('comment', 16);
+    }
+
+    //TODO: Test for trying to create TestItem for non existent TestCollection
 }

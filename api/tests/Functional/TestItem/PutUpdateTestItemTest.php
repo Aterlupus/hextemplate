@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Test\Functional\TestItem;
 
 use Test\Functional\Shared\AbstractPutFunctionalTest;
+use Test\Functional\Shared\RequestJson;
+use Test\Helper\Random;
 
-class PutTestItemTest extends AbstractPutFunctionalTest
+class PutUpdateTestItemTest extends AbstractPutFunctionalTest
 {
     use TestItemTestTrait;
 
@@ -15,6 +17,16 @@ class PutTestItemTest extends AbstractPutFunctionalTest
     protected static function getUri(): string
     {
         return self::TEST_COLLECTION;
+    }
+
+    protected function getEntityJson(): RequestJson
+    {
+        $testCollection = $this->eg->getTestCollection();
+
+        return self::json()
+            ->set('description', Random::getString())
+            ->set('amount', Random::getInteger(0, 1000))
+            ->set('testCollectionId', $testCollection->getId()->getValue());
     }
 
     public function testItUpdatesTestItem()

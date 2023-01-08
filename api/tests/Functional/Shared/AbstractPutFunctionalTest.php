@@ -21,13 +21,13 @@ abstract class AbstractPutFunctionalTest extends AbstractHttpFunctionalTest
         return 'PUT';
     }
 
-    protected function itUpdates(): void
+    protected function itUpdates(?RequestJson $jsonRequest = null): void
     {
         $entityId = $this->createEntity()->getId();
-        $json = $this->getEntityJson();
+        $jsonRequest = $jsonRequest ?? $this->getEntityJson();
 
         $url = sprintf(static::getUri(), $entityId);
-        $response = $this->put($url, $json);
+        $response = $this->put($url, $jsonRequest);
         self::assertResponseCode(Response::HTTP_OK);
 
         $id = $response['id'];
@@ -35,7 +35,7 @@ abstract class AbstractPutFunctionalTest extends AbstractHttpFunctionalTest
 
         static::assertRequestAndEntityIdentity(
             $id,
-            $json,
+            $jsonRequest,
             $domainEntity
         );
     }

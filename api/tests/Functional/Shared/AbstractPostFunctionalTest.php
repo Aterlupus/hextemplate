@@ -18,11 +18,11 @@ abstract class AbstractPostFunctionalTest extends AbstractHttpFunctionalTest
         return 'POST';
     }
 
-    protected function itCreates(): void
+    protected function itCreates(?RequestJson $jsonRequest = null): void
     {
-        $json = $this->getEntityJson();
+        $jsonRequest = $jsonRequest ?? $this->getEntityJson();
 
-        $response = $this->post(static::getUri(), $json);
+        $response = $this->post(static::getUri(), $jsonRequest);
         self::assertResponseCode(Response::HTTP_CREATED);
 
         $id = $response['id'];
@@ -30,7 +30,7 @@ abstract class AbstractPostFunctionalTest extends AbstractHttpFunctionalTest
 
         static::assertRequestAndEntityIdentity(
             $id,
-            $json,
+            $jsonRequest,
             $domainEntity
         );
     }

@@ -16,6 +16,7 @@ class TestItem extends AbstractDomainEntity
         protected TestItemDescription $description,
         protected TestItemAmount $amount,
         protected TestItemIsActive $isActive,
+        protected TestItemComment $comment,
         protected TestCollectionId $testCollectionId,
     ) {}
 
@@ -41,6 +42,12 @@ class TestItem extends AbstractDomainEntity
         $this->isActive = new TestItemIsActive(false);
     }
 
+    public function updateComment(
+        TestItemComment $comment
+    ): void {
+        $this->comment = $comment;
+    }
+
     public function getId(): TestItemId
     {
         return $this->id;
@@ -59,6 +66,11 @@ class TestItem extends AbstractDomainEntity
     public function getIsActive(): TestItemIsActive
     {
         return $this->isActive;
+    }
+
+    public function getComment(): TestItemComment
+    {
+        return $this->comment;
     }
 
     public function getTestCollectionId(): TestCollectionId

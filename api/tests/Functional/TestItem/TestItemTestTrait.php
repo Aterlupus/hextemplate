@@ -21,6 +21,7 @@ trait TestItemTestTrait
         return self::json()
             ->set('description', Random::getString())
             ->set('amount', Random::getInteger(0, 1000))
+            ->set('comment', Random::getString(32))
             ->set('testCollectionId', $testCollection->getId()->getValue());
     }
 
