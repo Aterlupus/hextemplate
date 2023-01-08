@@ -9,11 +9,11 @@ use App\TestItem\Domain\TestItemIsActive;
 use Symfony\Component\HttpFoundation\Response;
 use Test\Functional\Shared\AbstractHttpFunctionalTest;
 
-class PatchTestItemTest extends AbstractHttpFunctionalTest
+class PatchActivateTestItemTest extends AbstractHttpFunctionalTest
 {
     use TestItemTestTrait;
 
-    private const TEST_ITEM = '/api/test_items/%s/%s.json';
+    private const TEST_ITEM = '/api/test_items/%s/activate.json';
 
 
     protected static function getHttpMethod(): string
@@ -25,7 +25,7 @@ class PatchTestItemTest extends AbstractHttpFunctionalTest
     {
         $testItem = $this->createEntity(['isActive' => new TestItemIsActive(false)]);
 
-        $uri = sprintf(self::TEST_ITEM, $testItem->getId(), 'activate');
+        $uri = sprintf(self::TEST_ITEM, $testItem->getId());
         $response = $this->patch($uri, self::json());
         self::assertResponseCode(Response::HTTP_OK);
 
@@ -34,22 +34,6 @@ class PatchTestItemTest extends AbstractHttpFunctionalTest
 
         self::assertResponseAndEntityIdentity($response, $testItem);
         self::assertTrue($testItem->getIsActive()->getValue());
-    }
-
-    //TODO: Split into separate classes?
-    public function testItDeactivatesTestItem()
-    {
-        $testItem = $this->createEntity();
-
-        $uri = sprintf(self::TEST_ITEM, $testItem->getId(), 'deactivate');
-        $response = $this->patch($uri, self::json());
-        self::assertResponseCode(Response::HTTP_OK);
-
-        /** @var TestItem $testItem */
-        $testItem = $this->getEntity(self::getEntityClass(), $testItem->getId());
-
-        self::assertResponseAndEntityIdentity($response, $testItem);
-        self::assertFalse($testItem->getIsActive()->getValue());
     }
 
     //TODO: Test for missing TestItem
