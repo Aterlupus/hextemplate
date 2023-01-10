@@ -14,9 +14,18 @@ class Regex
         return $matches[1];
     }
 
-    public static function getOnlyRegexMatch(string $content, string $pattern): string
+    public static function getOnlyRegexMatch(string $content, string $pattern, bool $filterEmpty = true): string
     {
         $matches = self::getRegexMatches($content, $pattern);
+
+        //TODO: Evaluate and possibly change
+        if ($filterEmpty) {
+            $matches = array_filter(
+                $matches,
+                fn(string $match) => false === empty($match),
+            );
+        }
+
         Assert::count($matches, 1, sprintf('Invalid %s method result. 1 match expected, got %d', __METHOD__, count($matches)));
 
         return Set::getOnly($matches);
