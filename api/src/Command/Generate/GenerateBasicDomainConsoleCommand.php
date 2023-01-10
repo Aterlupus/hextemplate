@@ -9,6 +9,9 @@ use App\Command\Generate\Nette\GeneratedFilePrinter;
 use App\Command\Generate\Structure\DomainEntityProperties;
 use App\Command\Generate\Structure\DomainEntityProperty;
 use App\Command\Generate\Printer\GeneratedFilesCreator;
+use App\Core\Exception\File\NoFileException;
+use App\Core\Util\Files\FileGetter;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -30,12 +33,18 @@ class GenerateBasicDomainConsoleCommand extends AbstractConsoleCommand
     protected function configure(): void
     {
         parent::configure();
-        $this->setName('app:generate:domain');
+        $this
+            ->setName('app:generate:domain')
+            ->addArgument('domain', InputArgument::REQUIRED, 'Name of domain described in file [domain].yaml in ./schema directory');
     }
 
+    /**
+     * @throws NoFileException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $yaml = Yaml::parse(file_get_contents('./src/Command/Generate/schema/TestTag.yaml'));
+        $domain = $input->getArgument('domain');
+        $yaml = Yaml::parse(FileGetter::getContents(sprintf('./src/Command/Generate/schema/%s.yaml', $domain)));
         $domain = $yaml['domain'];
         $properties = self::createDomainEntityProperties($yaml['properties']);
 
