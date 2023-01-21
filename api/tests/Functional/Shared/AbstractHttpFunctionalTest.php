@@ -79,7 +79,7 @@ abstract class AbstractHttpFunctionalTest extends AbstractFunctionalTest
         }
 
         foreach ($defaultedKeys as $fieldName) {
-            $getter = sprintf('get%s', $fieldName);
+            $getter = sprintf('get%s', ucfirst($fieldName));
             self::assertEquals(static::getDefaultFieldsValues()[$fieldName], $domainEntity->$getter()->getValue());
         }
 
