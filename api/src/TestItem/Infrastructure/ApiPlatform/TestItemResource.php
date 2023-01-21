@@ -40,10 +40,6 @@ use Symfony\Component\Validator\Constraints as Assert;
             provider: ApiPlatformDomainEntityProvider::class,
             processor: ApiPlatformDomainEntityProcessor::class,
         ),
-        new Delete(
-            provider: ApiPlatformDomainEntityProvider::class,
-            processor: ApiPlatformDomainEntityProcessor::class,
-        ),
         new Patch(
             '/test_items/{id}/activate.{_format}',
             name: 'activate',
@@ -53,6 +49,10 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Patch(
             '/test_items/{id}/deactivate.{_format}',
             name: 'deactivate',
+            provider: ApiPlatformDomainEntityProvider::class,
+            processor: ApiPlatformDomainEntityProcessor::class,
+        ),
+        new Delete(
             provider: ApiPlatformDomainEntityProvider::class,
             processor: ApiPlatformDomainEntityProcessor::class,
         ),
