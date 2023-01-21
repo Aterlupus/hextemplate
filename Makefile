@@ -38,7 +38,7 @@ Project:
 install:
 	@$(DC) up -d
 	@$(EXEC) composer install
-	@$(EXECMYSQL) mysql --user=root --password=root -e "GRANT ALL PRIVILEGES ON *.* TO 'sf4'@'%';"
+	@$(EXECMYSQL) mysql --user=root --password=root -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%';"
 	@$(EXEC) bin/console d:d:c --if-not-exists
 	@$(EXEC) bin/console d:s:c
 	@$(EXEC) bin/console d:d:c --if-not-exists --env=test

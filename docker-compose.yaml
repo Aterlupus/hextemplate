@@ -16,8 +16,6 @@ services:
     container_name: newproject_php
     volumes:
       - ./api:/var/www/html
-    environment:
-      - maildev_host=sf4_maildev
     depends_on:
       - mysql
   
@@ -27,9 +25,9 @@ services:
     container_name: newproject_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sf4
-      MYSQL_USER: sf4
-      MYSQL_PASSWORD: sf4
+      MYSQL_DATABASE: newproject
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
