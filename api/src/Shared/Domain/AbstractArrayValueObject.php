@@ -9,7 +9,7 @@ use JsonSerializable;
 abstract class AbstractArrayValueObject implements JsonSerializable
 {
     public function __construct(
-        protected readonly array $value = []
+        protected array $value = []
     ) {}
 
     public function getValue(): array

@@ -6,7 +6,7 @@ namespace App\Shared\Domain;
 abstract class AbstractBooleanValueObject
 {
     public function __construct(
-        protected readonly bool $value
+        protected bool $value
     ) {}
 
     public function equals(self $booleanValueObject): bool
