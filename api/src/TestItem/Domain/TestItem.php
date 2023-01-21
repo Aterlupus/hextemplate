@@ -32,13 +32,13 @@ class TestItem extends AbstractDomainEntity
 
     public function activate(): void
     {
-        Assert::false($this->getIsActive()->getValue());
+        Assert::false($this->getIsActive()->getValue(), sprintf('Couldn\'t activate TestItem of id "%s". TestItem already active', $this->getId()->getValue()));
         $this->isActive = new TestItemIsActive(true);
     }
 
     public function deactivate(): void
     {
-        Assert::true($this->getIsActive()->getValue());
+        Assert::true($this->getIsActive()->getValue(), sprintf('Couldn\'t deactivate TestItem of id "%s". TestItem already inactive', $this->getId()->getValue()));
         $this->isActive = new TestItemIsActive(false);
     }
 
