@@ -70,6 +70,10 @@ mysql:
 	@$(EXECMYSQL) bash
 
 ## Stop the project
+stop:
+	@$(DC) stop
+
+## Tear down the project
 down:
 	@$(DC) down
 
