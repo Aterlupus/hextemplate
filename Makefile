@@ -13,6 +13,7 @@ ifndef CI_JOB_ID
 	TARGET_MAX_CHAR_NUM=30
 endif
 
+## Display this message
 help:
 	@echo "${YELLOW}Newproject${RESET} with API Platform "
 	@awk '/^[a-zA-Z\-_0-9]+:/ { \
@@ -33,7 +34,7 @@ help:
 #################################
 Project:
 
-## Install the project
+## Install project
 install:
 	@$(DC) up -d
 	@$(EXEC) composer install
@@ -44,7 +45,7 @@ install:
 	@$(EXEC) bin/console d:s:c --env=test
 	@$(EXEC) bin/console c:c
 
-## Start the project
+## Start project
 up:
 	@$(DC) up -d --remove-orphans --no-recreate
 
@@ -65,19 +66,19 @@ update-db:
 phpunit:
 	@$(EXEC) ./bin/phpunit $(call args,$@)
 
-## Enter the database container
-mysql:
-	@$(EXECMYSQL) bash
-
-## Stop the project
-stop:
-	@$(DC) stop
-
-## Tear down the project
-down:
-	@$(DC) down
-
 ## Run deptrac
 deptrac:
 	@echo "${YELLOW}Checking Bounded contexts...${RESET}"
 	@$(EXEC) vendor/bin/deptrac
+
+## Enter database container
+mysql:
+	@$(EXECMYSQL) bash
+
+## Stop project
+stop:
+	@$(DC) stop
+
+## Tear down project
+down:
+	@$(DC) down
