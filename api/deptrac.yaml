@@ -7,19 +7,24 @@ parameters:
         - name: Domain
           collectors:
               - type: className
-                regex: .*\\Domain\\.*
+                regex: ^App\\[^\\]*\\Domain\\.*
         - name: Application
           collectors:
               - type: className
-                regex: .*\\Application\\.*
+                regex: ^App\\[^\\]*\\Application\\.*
         - name: Infrastructure
           collectors:
               - type: className
-                regex: .*\\Infrastructure\\.*
+                regex: ^App\\[^\\]*\\Infrastructure\\.*
         - name: Core
           collectors:
               - type: className
                 regex: .*\\Core\\.*
+        - name: Command
+          collectors:
+           - type: className
+             regex: ^App\\Command\\.*
+        #Vendors
         - name: Symfony
           collectors:
               - type: className
@@ -36,10 +41,15 @@ parameters:
           collectors:
               - type: className
                 regex: ^Webmozart\\.*
+        - name: Nette
+          collectors:
+            - type: className
+              regex: ^Nette\\.*
 
     ruleset:
         Domain:
             - Core
+            - Webmozart
         Application:
             - Domain
             - Core
@@ -53,3 +63,12 @@ parameters:
         Core:
             - Symfony
             - Webmozart
+        Command:
+            - Domain
+            - Application
+            - Infrastructure
+            - Core
+            - Symfony
+            - ApiPlatform
+            - Doctrine
+            - Nette
