@@ -9,11 +9,16 @@ use App\TestCollection\Domain\TestCollection;
 use App\TestCollection\Domain\TestCollectionId;
 use App\TestCollection\Domain\TestCollectionName;
 use App\TestCollection\Domain\TestCollectionRepositoryInterface;
+use App\TestCollection\Domain\TestCollectionTestItemsIds;
+use App\TestItem\Domain\TestItem;
+use App\TestItem\Domain\TestItemId;
+use App\TestItem\Domain\TestItemRepositoryInterface;
 
 class UpdateTestCollectionCommandHandler extends AbstractCommandHandler
 {
     public function __construct(
-        private readonly TestCollectionRepositoryInterface $testCollectionRepository
+        private readonly TestCollectionRepositoryInterface $testCollectionRepository,
+        private readonly TestItemRepositoryInterface $testItemRepository
     ) {}
 
     /**
@@ -22,10 +27,17 @@ class UpdateTestCollectionCommandHandler extends AbstractCommandHandler
     public function __invoke(UpdateTestCollectionCommand $command): void
     {
         $testCollection = $this->testCollectionRepository->get(new TestCollectionId($command->getId()));
+        //TODO: Catch exception in Infrastructure layer to respond with proper error code
         self::assertEntityNotNull($command->getId(), TestCollection::class, $testCollection);
 
+        foreach ($command->getTestItemsIds() as $testItemId) {
+            $testItem = $this->testItemRepository->get(new TestItemId($testItemId));
+            self::assertEntityNotNull($testItemId, TestItem::class, $testItem);
+        }
+
         $testCollection->update(
-            new TestCollectionName($command->getName())
+            new TestCollectionName($command->getName()),
+            new TestCollectionTestItemsIds($command->getTestItemsIds())
         );
 
         $this->testCollectionRepository->save($testCollection);

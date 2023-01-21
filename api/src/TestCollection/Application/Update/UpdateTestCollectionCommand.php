@@ -11,13 +11,15 @@ class UpdateTestCollectionCommand implements CommandInterface, CreatableFromArra
     public function __construct(
         private readonly string $id,
         private readonly string $name,
+        private readonly array $testItemsIds
     ) {}
 
     public static function createFromArray(array $data): self
     {
         return new self(
             (string) $data['id'],
-            $data['name']
+            $data['name'],
+            $data['testItemsIds']
         );
     }
 
@@ -29,5 +31,10 @@ class UpdateTestCollectionCommand implements CommandInterface, CreatableFromArra
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getTestItemsIds(): array
+    {
+        return $this->testItemsIds;
     }
 }

@@ -16,9 +16,11 @@ class TestCollection extends AbstractDomainEntity
     }
 
     public function update(
-        TestCollectionName $name
+        TestCollectionName $name,
+        TestCollectionTestItemsIds $testItemsIds
     ): void {
         $this->name = $name;
+        $this->testItemsIds = $testItemsIds;
     }
 
     public function getId(): TestCollectionId
