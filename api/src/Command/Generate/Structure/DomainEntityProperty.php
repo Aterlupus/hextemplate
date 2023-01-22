@@ -13,7 +13,6 @@ class DomainEntityProperty
         private readonly string $type,
         private readonly ?int $minLength,
         private readonly ?int $maxLength,
-        private readonly bool $isExternal,
         private readonly ?string $externalDomain,
         private readonly ?string $itemsType
     ) {}
@@ -55,7 +54,7 @@ class DomainEntityProperty
 
     public function isExternal(): bool
     {
-        return $this->isExternal;
+        return null !== $this->getExternalDomain();
     }
 
     public function getExternalDomain(): ?string
