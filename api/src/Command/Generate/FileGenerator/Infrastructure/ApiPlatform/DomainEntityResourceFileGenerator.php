@@ -135,6 +135,10 @@ class DomainEntityResourceFileGenerator extends AbstractFileGenerator
             $%s->get%s()->getValue(),
         EOD;
 
+        $fromModelCollectionRowFormat = <<<'EOD'
+            $%s->get%s()->getValues(),
+        EOD;
+
         $uuidRowFormat = <<<'EOD'
             new Uuid($%s->get%s()->getValue()),
         EOD;
@@ -144,6 +148,8 @@ class DomainEntityResourceFileGenerator extends AbstractFileGenerator
         foreach ($this->properties as $property) {
             if ($property->isId()) {
                 $fromModelRows .= sprintf($uuidRowFormat, lcfirst($this->getDomain()), ucfirst($property->getName())) . "\n";
+            } elseif (null !== $property->getItemsType()) {
+                $fromModelRows .= sprintf($fromModelCollectionRowFormat, lcfirst($this->getDomain()), ucfirst($property->getName())) . "\n";
             } else {
                 $fromModelRows .= sprintf($fromModelRowFormat, lcfirst($this->getDomain()), ucfirst($property->getName())) . "\n";
             }
