@@ -1,0 +1,16 @@
+domain: TestTag
+properties:
+  id:
+    type: string
+  name:
+    type: string
+    minLength: 2
+    maxLength: 128
+  testItemsIds:
+    type: array
+    externalDomain: TestItem
+    items:
+      type: string
+  parentTagId:
+    type: ?string
+    externalDomain: TestTag
