@@ -7,10 +7,14 @@ use App\TestCollection\Domain\TestCollection;
 use App\TestCollection\Domain\TestCollectionTestItemsIds;
 use App\TestItem\Domain\TestItemId;
 use Test\Functional\Shared\RequestJson;
+use Test\Functional\TestItem\TestItemCreatorTrait;
 use Test\Helper\Random;
 
 trait TestCollectionTestTrait
 {
+    use TestCollectionCreatorTrait, TestItemCreatorTrait;
+
+
     protected static function getEntityClass(): string
     {
         return TestCollection::class;
@@ -27,7 +31,7 @@ trait TestCollectionTestTrait
     {
         $testItemsUuids = Random::getUuids(4);
         $testItemsIds = self::getTestItemsIdsFromUuids($testItemsUuids);
-        $testCollection = $this->eg->getTestCollection(['testItemsIds' => $testItemsIds]);
+        $testCollection = $this->getTestCollection(['testItemsIds' => $testItemsIds]);
         $this->getTestItemsFromTestItemsIds($testCollection, $testItemsIds);
 
         return $testCollection;
@@ -50,7 +54,7 @@ trait TestCollectionTestTrait
     private function getTestItemsFromTestItemsIds(TestCollection $testCollection, TestCollectionTestItemsIds $testItemsIds): array
     {
         return array_map(
-            fn(TestItemId $testItemId) => $this->eg->getTestItem([
+            fn(TestItemId $testItemId) => $this->getTestItem([
                 'id' => $testItemId,
                 'testCollection' => $testCollection
             ]),

@@ -9,6 +9,9 @@ use Test\Helper\Random;
 
 trait TestItemTestTrait
 {
+    use TestItemCreatorTrait;
+
+
     protected static function getEntityClass(): string
     {
         return TestItem::class;
@@ -16,7 +19,7 @@ trait TestItemTestTrait
 
     protected function getEntityJson(): RequestJson
     {
-        $testCollection = $this->eg->getTestCollection();
+        $testCollection = $this->getTestCollection();
 
         return self::json()
             ->set('description', Random::getString())
@@ -35,7 +38,6 @@ trait TestItemTestTrait
 
     protected function createEntity(array $values = []): TestItem
     {
-        //TODO: eg?
-        return $this->eg->getTestItem($values);
+        return $this->getTestItem($values);
     }
 }

@@ -20,7 +20,7 @@ class PutTestCollectionTest extends AbstractPutFunctionalTest
 
     protected function createEntity(): AbstractDomainEntity
     {
-        return $this->eg->getTestCollection();
+        return $this->getTestCollection();
     }
 
     public function testItUpdatesTestCollection()

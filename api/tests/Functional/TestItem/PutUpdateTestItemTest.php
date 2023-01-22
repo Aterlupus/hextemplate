@@ -21,7 +21,7 @@ class PutUpdateTestItemTest extends AbstractPutFunctionalTest
 
     protected function getEntityJson(): RequestJson
     {
-        $testCollection = $this->eg->getTestCollection();
+        $testCollection = $this->getTestCollection();
 
         return self::json()
             ->set('description', Random::getString())
