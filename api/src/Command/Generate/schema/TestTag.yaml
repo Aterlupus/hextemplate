@@ -9,8 +9,6 @@ properties:
   testItemsIds:
     type: array
     externalDomain: TestItem
-    items:
-      type: string
   parentTagId:
     type: ?string
     externalDomain: TestTag

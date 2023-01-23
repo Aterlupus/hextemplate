@@ -105,6 +105,19 @@ class CreateDomainEntityCommandHandlerFileGenerator extends AbstractFileGenerato
             $this->addUse(sprintf('App\%s\Domain\%sId', $property->getExternalDomain(), $property->getExternalDomain()));
 
             if ($property->isCollection()) {
+                $getExternalEntityCode .= sprintf(
+                    self::GET_EXTERNAL_ENTITIES_FORMAT,
+                    ucfirst($property->getName()),
+                    lcfirst($property->getExternalDomain()),
+                    lcfirst($property->getExternalDomain()),
+                    lcfirst($property->getExternalDomain()),
+                    $property->getExternalDomain(),
+                    lcfirst($property->getExternalDomain()),
+                    lcfirst($property->getExternalDomain()),
+                    $property->getExternalDomain(),
+                    lcfirst($property->getExternalDomain()),
+                );
+            } else {
                 $parameter = $constructor->addPromotedParameter(sprintf('%sRepository', lcfirst($property->getExternalDomain())));
                 $parameter->setReadOnly();
                 $parameter->setType(sprintf('%sRepositoryInterface', $property->getExternalDomain()));
@@ -128,19 +141,6 @@ class CreateDomainEntityCommandHandlerFileGenerator extends AbstractFileGenerato
                 }
 
                 $getExternalEntityCode .= $getExternalEntityAssertionCode;
-            } else {
-                $getExternalEntityCode .= sprintf(
-                    self::GET_EXTERNAL_ENTITIES_FORMAT,
-                    ucfirst($property->getName()),
-                    lcfirst($property->getExternalDomain()),
-                    lcfirst($property->getExternalDomain()),
-                    lcfirst($property->getExternalDomain()),
-                    $property->getExternalDomain(),
-                    lcfirst($property->getExternalDomain()),
-                    lcfirst($property->getExternalDomain()),
-                    $property->getExternalDomain(),
-                    lcfirst($property->getExternalDomain()),
-                );
             }
         }
 

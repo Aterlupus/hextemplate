@@ -148,7 +148,7 @@ class DomainEntityResourceFileGenerator extends AbstractFileGenerator
         foreach ($this->properties as $property) {
             if ($property->isId()) {
                 $fromModelRows .= sprintf($uuidRowFormat, lcfirst($this->getDomain()), ucfirst($property->getName())) . "\n";
-            } elseif (null !== $property->getItemsType()) {
+            } elseif ($property->isCollection()) {
                 $fromModelRows .= sprintf($fromModelCollectionRowFormat, lcfirst($this->getDomain()), ucfirst($property->getName())) . "\n";
             } else {
                 $fromModelRows .= sprintf($fromModelRowFormat, lcfirst($this->getDomain()), ucfirst($property->getName())) . "\n";

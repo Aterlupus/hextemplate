@@ -66,7 +66,6 @@ class GenerateBasicDomainConsoleCommand extends AbstractConsoleCommand
                 $property['minLength'] ?? null,
                 $property['maxLength'] ?? null,
                 $property['externalDomain'] ?? null,
-                $property['items']['type'] ?? null,
             ));
         }
 

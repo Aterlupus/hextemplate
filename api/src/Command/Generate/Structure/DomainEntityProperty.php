@@ -13,8 +13,7 @@ class DomainEntityProperty
         private readonly string $type,
         private readonly ?int $minLength,
         private readonly ?int $maxLength,
-        private readonly ?string $externalDomain,
-        private readonly ?string $itemsType
+        private readonly ?string $externalDomain
     ) {}
 
     public function getName(): string
@@ -62,13 +61,8 @@ class DomainEntityProperty
         return $this->externalDomain;
     }
 
-    public function getItemsType(): ?string
-    {
-        return $this->itemsType;
-    }
-
     public function isCollection(): bool
     {
-        return null === $this->getItemsType();
+        return 'array' === $this->getType();
     }
 }
