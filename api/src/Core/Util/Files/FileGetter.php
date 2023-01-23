@@ -31,4 +31,28 @@ class FileGetter
             throw new NoFileException($path);
         }
     }
+
+    public static function getFilesPaths(string $path): array
+    {
+        return self::scanDir($path);
+    }
+
+    private static function scanDir($dir): array
+    {
+        $result = [];
+        foreach (scandir($dir) as $filename) {
+            if ($filename[0] !== '.') {
+                $filePath = $dir . '/' . $filename;
+                if (is_dir($filePath)) {
+                    foreach (self::scanDir($filePath) as $childFilename) {
+                        $result[] = $filename . '/' . $childFilename;
+                    }
+                } else {
+                    $result[] = $filename;
+                }
+            }
+        }
+
+        return $result;
+    }
 }
