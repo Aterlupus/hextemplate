@@ -5,6 +5,7 @@ namespace App\Shared\Infrastructure\Bundles\DoctrineCustomTypesRegisterer;
 
 use App\Core\Util\Files\FileGetter;
 use App\Core\Util\Regex;
+use App\Shared\Config\SourceDirectoryFinder;
 
 class DoctrineCustomTypesProvider
 {
@@ -25,7 +26,7 @@ class DoctrineCustomTypesProvider
     private static function getCustomTypesFilePaths(): array
     {
         return array_filter(
-            FileGetter::getFilesPaths('src'),
+            FileGetter::getFilesPaths(SourceDirectoryFinder::getSrcDir()),
             fn(string $filepath) => 0 < preg_match('#(.*?)/Infrastructure/Persistence/Doctrine/([^/]*Type)\.php#', $filepath)
         );
     }
