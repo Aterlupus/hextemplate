@@ -60,7 +60,7 @@ composer-install:
 ## Update SQL database schema
 update-db:
 	@$(EXEC) ./bin/console c:c
-	@$(EXEC) ./bin/console d:s:u
+	@$(EXEC) ./bin/console d:s:u --force
 
 ## Run phpunit tests
 phpunit:
