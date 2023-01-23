@@ -4,20 +4,20 @@ declare(strict_types=1);
 namespace Test\Unit\Core\Util;
 
 use App\Core\Util\Regex;
+use App\Core\Util\Set;
 use InvalidArgumentException;
 use Test\Unit\Shared\AbstractUnitTest;
 
 class RegexTest extends AbstractUnitTest
 {
-    public function testItGetsMatches()
+    public function testItGetsMatch()
     {
         $pattern = '/"(.*?)"/';
         $string = '<a href="https://address.com" title="Address"></a>';
-        $matches = Regex::getRegexMatches($string, $pattern);
+        $matches = Regex::getRegexMatch($string, $pattern);
 
-        self::assertCount(2, $matches);
-        self::assertEquals('https://address.com', $matches[0]);
-        self::assertEquals('Address', $matches[1]);
+        self::assertCount(1, $matches);
+        self::assertEquals('https://address.com', Set::getOnly($matches));
     }
 
     public function testItGetsOnlyRegexMatch()
@@ -32,7 +32,7 @@ class RegexTest extends AbstractUnitTest
     public function testGetOnlyRegexMatchFailsOnMultipleMatches()
     {
         try {
-            $pattern = '/"(.*?)"/';
+            $pattern = '/"(.*?)".*"(.*?)"/';
             $string = '<a href="https://address.com" title="Address"></a>';
             Regex::getOnlyRegexMatch($string, $pattern);
         } catch (InvalidArgumentException $exception) {

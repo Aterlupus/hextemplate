@@ -7,24 +7,17 @@ use Webmozart\Assert\Assert;
 
 class Regex
 {
-    public static function getRegexMatches(string $content, string $pattern): array
+    public static function getRegexMatch(string $content, string $pattern): array
     {
-        preg_match_all($pattern, $content, $matches, PREG_PATTERN_ORDER);
+        preg_match($pattern, $content, $matches);
+        unset($matches[0]);
 
-        return $matches[1];
+        return array_values($matches);
     }
 
-    public static function getOnlyRegexMatch(string $content, string $pattern, bool $filterEmpty = true): string
+    public static function getOnlyRegexMatch(string $content, string $pattern): string
     {
-        $matches = self::getRegexMatches($content, $pattern);
-
-        //TODO: Evaluate and possibly change
-        if ($filterEmpty) {
-            $matches = array_filter(
-                $matches,
-                fn(string $match) => false === empty($match),
-            );
-        }
+        $matches = self::getRegexMatch($content, $pattern);
 
         Assert::count($matches, 1, sprintf('Invalid %s method result. 1 match expected, got %d', __METHOD__, count($matches)));
 
