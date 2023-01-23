@@ -1,12 +1,12 @@
 # HexTemplate
 
-Template for creating DDD, hexagonal, potentially framework-agnostic persistent systems.  
+Template for creating DDD, hexagonal, potentially framework-agnostic, persistent APIs.  
 
 Realized with two test entities TestItem and TestCollection. Implemented with Symfony + ApiPlatform as Infrastructure layer.
 
-Run **make help** at any time to see basic actions
+Run **make help** to see basic actions
 
-### How to use:
+### How to use
 
 Clone the repository by running **git clone https://github.com/Aterlupus/hextemplate.git**
 
