@@ -48,27 +48,27 @@ parameters:
 
     ruleset:
         Domain:
-            - Core
-            - Webmozart
+          - Core
+          - Webmozart
         Application:
-            - Domain
-            - Core
+          - Core
+          - Domain
         Infrastructure:
-            - Domain
-            - Application
-            - Core
-            - Symfony
-            - ApiPlatform
-            - Doctrine
+          - Core
+          - Domain
+          - Application
+          - Symfony
+          - Doctrine
+          - ApiPlatform
         Core:
-            - Symfony
-            - Webmozart
+          - Symfony
+          - Webmozart
         Command:
-            - Domain
-            - Application
-            - Infrastructure
-            - Core
-            - Symfony
-            - ApiPlatform
-            - Doctrine
-            - Nette
+          - Core
+          - Domain
+          - Application
+          - Infrastructure
+          - Symfony
+          - Doctrine
+          - ApiPlatform
+          - Nette
