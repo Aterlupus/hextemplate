@@ -21,13 +21,13 @@ abstract class AbstractFunctionalTest extends WebTestCase
 
     protected EntityGenerator $eg;
 
-    //TODO: Setup transaction so test DB doesn't swell - $this->entityManager->beginTransaction();
     protected function setUp(): void
     {
         parent::setUp();
         $this->client = static::createClient();
         $this->entityManager = $this->getService('doctrine.orm.entity_manager');
         $this->eg = new EntityGenerator($this->entityManager);
+        $this->entityManager->beginTransaction();
     }
 
     protected function getService(string $service): object
