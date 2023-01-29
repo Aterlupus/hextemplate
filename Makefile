@@ -62,6 +62,11 @@ update-db:
 	@$(EXEC) ./bin/console c:c
 	@$(EXEC) ./bin/console d:s:u --force
 
+## Update SQL test database schema
+update-test-db:
+	@$(EXEC) ./bin/console c:c
+	@$(EXEC) ./bin/console d:s:u --force --env=test
+
 ## Run phpunit tests
 phpunit:
 	@$(EXEC) ./bin/phpunit $(call args,$@)
