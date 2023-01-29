@@ -7,6 +7,8 @@ interface TestItemRepositoryInterface
 {
     public function get(TestItemId $testItemId): ?TestItem;
 
+    public function getMany(?array $testItemsIds): array;
+
     public function save(TestItem $testItem): void;
 
     public function delete(TestItem $testItem): void;

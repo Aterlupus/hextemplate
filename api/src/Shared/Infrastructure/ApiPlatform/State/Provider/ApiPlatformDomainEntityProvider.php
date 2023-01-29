@@ -13,21 +13,44 @@ class ApiPlatformDomainEntityProvider extends AbstractApiPlatformDomainEntityOpe
 {
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|iterable|null
     {
-        $id = $uriVariables['id'];
         $domain = $operation->getShortName();
-        $entity = $this->getDomainEntity($domain, (string) $id);
 
-        if (null !== $entity) {
-            $resourceClass = $operation->getClass();
-            if (self::isUpdating($operation)) {
-                return self::getEmptyEntity($resourceClass, $uriVariables);
+        if (self::isGettingMany($operation, $uriVariables)) {
+            return $this->getDomainEntities($domain, self::getIdsFromContext($context));
+        } else {
+            $id = $uriVariables['id'];
+            $entity = $this->getDomainEntity($domain, (string) $id);
+
+            if (null !== $entity) {
+                $resourceClass = $operation->getClass();
+                if (self::isUpdating($operation)) {
+                    return self::getEmptyEntity($resourceClass, $uriVariables);
+                } else {
+                    return $resourceClass::fromModel($entity);
+                }
             } else {
-                return $resourceClass::fromModel($entity);
+                $entityClass = self::getDomainEntityClass($domain);
+                return new ResourceNotFoundResponse($entityClass, (string) $id);
+            }
+        }
+    }
+
+    private static function getIdsFromContext(array $context): ?array
+    {
+        if (isset($context['filters']['id'])) {
+            if (is_array($context['filters']['id'])) {
+                return $context['filters']['id'];
+            } else {
+                return [$context['filters']['id']];
             }
         } else {
-            $entityClass = self::getDomainEntityClass($domain);
-            return new ResourceNotFoundResponse($entityClass, (string) $id);
+            return null;
         }
+    }
+
+    private static function isGettingMany(Operation $operation, array $uriVariables): bool
+    {
+        return 'GET' === $operation->getMethod() && false === isset($uriVariables['id']);
     }
 
     private static function isUpdating(Operation $operation): bool

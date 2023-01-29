@@ -24,7 +24,7 @@ trait TestItemCreatorTrait
             new TestItemDescription(Random::getString(200)),
             new TestItemAmount(Random::getPositiveInteger(500)),
             $values['isActive'] ?? new TestItemIsActive(true),
-            new TestItemComment(null),
+            Random::chance() ? new TestItemComment(Random::getString(1000)) : new TestItemComment(null),
             isset($values['testCollection']) ? $values['testCollection']->getId() : $this->getTestCollection()->getId(),
         );
 

@@ -24,11 +24,7 @@ class GetTestItemTest extends AbstractGetFunctionalTest
 
         $response = $this->get(sprintf(self::TEST_ITEM, $testItem->getId()));
         $this->assertResponseCode(Response::HTTP_OK);
-
-        self::assertEquals($testItem->getId()->getValue(), $response['id']);
-        self::assertEquals($testItem->getDescription()->getValue(), $response['description']);
-        self::assertEquals($testItem->getAmount()->getValue(), $response['amount']);
-        self::assertEquals($testItem->getTestCollectionId()->getValue(), $response['testCollectionId']);
+        self::assertTestItemResponseIdentity($testItem, $response);
     }
 
     public function testItFailsToGetNonExistentTestItem()

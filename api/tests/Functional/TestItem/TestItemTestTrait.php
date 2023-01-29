@@ -40,4 +40,21 @@ trait TestItemTestTrait
     {
         return $this->getTestItem($values);
     }
+
+    protected static function assertTestItemResponseIdentity(TestItem $testItem, array $testItemResponse): void
+    {
+        self::assertEquals($testItem->getId()->getValue(), $testItemResponse['id']);
+        self::assertEquals($testItem->getDescription()->getValue(), $testItemResponse['description']);
+        self::assertEquals($testItem->getAmount()->getValue(), $testItemResponse['amount']);
+        self::assertEquals($testItem->getIsActive()->getValue(), $testItemResponse['isActive']);
+        self::assertEquals($testItem->getComment()->getValue(), $testItemResponse['comment']);
+        self::assertEquals($testItem->getTestCollectionId()->getValue(), $testItemResponse['testCollectionId']);
+    }
+
+    protected static function assertTestItemsResponseIdentity(array $testItems, array $testItemsResponse): void
+    {
+        foreach ($testItems as $index => $testItem) {
+            self::assertTestItemResponseIdentity($testItem, $testItemsResponse[$index]);
+        }
+    }
 }

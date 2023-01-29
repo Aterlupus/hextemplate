@@ -20,6 +20,15 @@ class TestItemDoctrineRepository extends AbstractDoctrineRepository implements T
         return $this->getRepository()->find($testItemId);
     }
 
+    public function getMany(?array $testItemsIds): array
+    {
+        if (null === $testItemsIds) {
+            return $this->getRepository()->findAll();
+        } else {
+            return $this->getRepository()->findBy(['id' => $testItemsIds]);
+        }
+    }
+
     public function save(TestItem $testItem): void
     {
         $this->saveEntity($testItem);

@@ -14,6 +14,8 @@ abstract class AbstractApiPlatformDomainEntityOperator
 
     private const ENTITY_QUERY_CLASS_FORMAT = 'App\\%s\\Application\\Get\\%sQuery';
 
+    private const ENTITIES_QUERY_CLASS_FORMAT = 'App\\%s\\Application\\GetCollection\\%ssQuery';
+
 
     public function __construct(
         private readonly QueryBusInterface $queryBus
@@ -27,6 +29,14 @@ abstract class AbstractApiPlatformDomainEntityOperator
         return $this->dispatchQuery(new $getQueryClass($id));
     }
 
+    protected function getDomainEntities(string $domain, ?array $ids): array
+    {
+        $getQueryClass = self::getManyQueryClass($domain);
+        self::assertQueryClassExists($getQueryClass);
+
+        return $this->dispatchQuery(new $getQueryClass($ids));
+    }
+
     protected static function getDomainEntityClass(string $domain): string
     {
         return sprintf(self::DOMAIN_ENTITY_CLASS_FORMAT, $domain, $domain);
@@ -35,6 +45,11 @@ abstract class AbstractApiPlatformDomainEntityOperator
     protected static function getQueryClass(string $domain): string
     {
         return sprintf(self::ENTITY_QUERY_CLASS_FORMAT, $domain, $domain);
+    }
+
+    protected static function getManyQueryClass(string $domain): string
+    {
+        return sprintf(self::ENTITIES_QUERY_CLASS_FORMAT, $domain, $domain);
     }
 
     protected static function assertQueryClassExists(string $getQueryClass): void

@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
@@ -21,6 +22,9 @@ use Symfony\Component\Validator\Constraints as Assert;
     shortName: 'TestItem',
     operations: [
         new Get(
+            provider: ApiPlatformDomainEntityProvider::class,
+        ),
+        new GetCollection(
             provider: ApiPlatformDomainEntityProvider::class,
         ),
         new Post(
@@ -58,6 +62,9 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
     ],
     routePrefix: '/api',
+    normalizationContext: [
+          "skip_null_values" => false,
+    ],
 )]
 final class TestItemResource implements JsonSerializable
 {
