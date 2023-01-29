@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Test\Functional\Shared;
 
 use App\Core\Util\Set;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -27,7 +28,7 @@ abstract class AbstractFunctionalTest extends WebTestCase
         $this->client = static::createClient();
         $this->entityManager = $this->getService('doctrine.orm.entity_manager');
         $this->eg = new EntityGenerator($this->entityManager);
-        $this->entityManager->beginTransaction();
+        $this->truncateEntities();
     }
 
     protected function getService(string $service): object
@@ -38,6 +39,12 @@ abstract class AbstractFunctionalTest extends WebTestCase
     protected function getParameter(string $parameter): array|string|float|int|bool|null
     {
         return static::$kernel->getContainer()->getParameter($parameter);
+    }
+
+    private function truncateEntities(): void
+    {
+        $purger = new ORMPurger($this->getEntityManager());
+        $purger->purge();
     }
 
     protected function assertNotResponseCode(int $code, ?string $message = ''): void
