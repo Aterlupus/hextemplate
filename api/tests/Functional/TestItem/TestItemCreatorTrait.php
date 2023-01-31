@@ -19,7 +19,7 @@ trait TestItemCreatorTrait
 
     public function getTestItem(array $values = []): TestItem
     {
-        $testItem = new TestItem(
+        $testItem = TestItem::create(
             $values['id'] ?? TestItemId::new(),
             new TestItemDescription(Random::getString(200)),
             new TestItemAmount(Random::getPositiveInteger(500)),

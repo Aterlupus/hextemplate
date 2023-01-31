@@ -7,12 +7,24 @@ use App\Shared\Domain\AbstractDomainEntity;
 
 class TestCollection extends AbstractDomainEntity
 {
-    public function __construct(
+    private function __construct(
         protected TestCollectionId $id,
         protected TestCollectionName $name,
         protected TestCollectionTestItemsIds $testItemsIds
     ) {
         //TODO: Assert $items to all be of class TestItemId?
+    }
+
+    public static function create(
+        TestCollectionId $id,
+        TestCollectionName $name,
+        TestCollectionTestItemsIds $testItemsIds
+    ): self {
+        return new self(
+            $id,
+            $name,
+            $testItemsIds
+        );
     }
 
     public function update(

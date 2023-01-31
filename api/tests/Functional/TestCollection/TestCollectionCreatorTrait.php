@@ -13,7 +13,7 @@ trait TestCollectionCreatorTrait
 {
     public function getTestCollection(array $values = []): TestCollection
     {
-        $testCollection = new TestCollection(
+        $testCollection = TestCollection::create(
             TestCollectionId::new(),
             new TestCollectionName(Random::getString(16)),
             $values['testItemsIds'] ?? new TestCollectionTestItemsIds([]),

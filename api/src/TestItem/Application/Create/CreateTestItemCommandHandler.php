@@ -31,8 +31,7 @@ class CreateTestItemCommandHandler extends AbstractCommandHandler
         $testCollection = $this->testCollectionRepository->get(new TestCollectionId($command->getTestCollectionId()));
         self::assertEntityNotNull($command->getTestCollectionId(), TestCollection::class, $testCollection);
 
-        //TODO: Move creation itself to domain layer
-        $testItem = new TestItem(
+        $testItem = TestItem::create(
             new TestItemId($command->getId()),
             new TestItemDescription($command->getDescription()),
             new TestItemAmount($command->getAmount()),

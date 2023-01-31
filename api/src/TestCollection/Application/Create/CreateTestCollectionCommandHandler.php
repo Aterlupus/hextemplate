@@ -18,7 +18,7 @@ class CreateTestCollectionCommandHandler extends AbstractCommandHandler
 
     public function __invoke(CreateTestCollectionCommand $command): void
     {
-        $testCollection = new TestCollection(
+        $testCollection = TestCollection::create(
             new TestCollectionId($command->getId()),
             new TestCollectionName($command->getName()),
             new TestCollectionTestItemsIds(),

@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
 
 class TestItem extends AbstractDomainEntity
 {
-    public function __construct(
+    private function __construct(
         protected TestItemId $id,
         protected TestItemDescription $description,
         protected TestItemAmount $amount,
@@ -19,6 +19,24 @@ class TestItem extends AbstractDomainEntity
         protected TestItemComment $comment,
         protected TestCollectionId $testCollectionId,
     ) {}
+
+    public static function create(
+        TestItemId $id,
+        TestItemDescription $description,
+        TestItemAmount $amount,
+        TestItemIsActive $active,
+        TestItemComment $comment,
+        TestCollectionId $testCollectionId
+    ): self {
+        return new self(
+            $id,
+            $description,
+            $amount,
+            $active,
+            $comment,
+            $testCollectionId
+        );
+    }
 
     public function update(
         TestItemDescription $description,
