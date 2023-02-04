@@ -26,7 +26,7 @@ trait FunctionalExecutionTrait
 
     protected function executeRequest(
         string $method,
-        string $route,
+        string $uri,
         ?RequestJson $jsonRequest = null,
         ?array $files = null,
         ?array $headers = null
@@ -46,7 +46,7 @@ trait FunctionalExecutionTrait
         try {
             static::getClientBrowser()->catchExceptions($this->catchException);
             static::getClientBrowser()->request(
-                $method, $route, [], $files, $server, $body
+                $method, $uri, [], $files, $server, $body
             );
         } catch (Exception $e) {
             $this->erroneousResponse = $e;
@@ -55,29 +55,29 @@ trait FunctionalExecutionTrait
         return $this->getResponseJson();
     }
 
-    protected function get(string $route, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
+    protected function get(string $uri, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
     {
-        return $this->executeRequest('get', $route, $requestJson, $files, $headers);
+        return $this->executeRequest('get', $uri, $requestJson, $files, $headers);
     }
 
-    protected function put(string $route, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
+    protected function put(string $uri, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
     {
-        return $this->executeRequest('put', $route, $requestJson, $files, $headers);
+        return $this->executeRequest('put', $uri, $requestJson, $files, $headers);
     }
 
-    protected function post(string $route, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
+    protected function post(string $uri, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
     {
-        return $this->executeRequest('post', $route, $requestJson, $files, $headers);
+        return $this->executeRequest('post', $uri, $requestJson, $files, $headers);
     }
 
-    protected function patch(string $route, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
+    protected function patch(string $uri, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
     {
-        return $this->executeRequest('patch', $route, $requestJson, $files, $headers);
+        return $this->executeRequest('patch', $uri, $requestJson, $files, $headers);
     }
 
-    protected function delete(string $route, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
+    protected function delete(string $uri, ?RequestJson $requestJson = null, ?array $files = null, ?array $headers = null): mixed
     {
-        return $this->executeRequest('delete', $route, $requestJson, $files, $headers);
+        return $this->executeRequest('delete', $uri, $requestJson, $files, $headers);
     }
 
     protected function getResponseJson()
