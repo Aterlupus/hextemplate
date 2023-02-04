@@ -12,6 +12,11 @@ class Uuid extends UuidV6
         parent::__construct((string) $uuid);
     }
 
+    public static function create(UuidV6|string $uuid): self
+    {
+        return new self($uuid);
+    }
+
     public static function new(): self
     {
         return new self(self::string());

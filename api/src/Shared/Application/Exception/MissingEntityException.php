@@ -9,6 +9,6 @@ class MissingEntityException extends Exception
 {
     public function __construct(string $id, string $entityClass)
     {
-        parent::__construct(sprintf('Entity %s of id "%s not found"', $entityClass, $id));
+        parent::__construct(sprintf('Entity %s of id "%s" not found', $entityClass, $id));
     }
 }

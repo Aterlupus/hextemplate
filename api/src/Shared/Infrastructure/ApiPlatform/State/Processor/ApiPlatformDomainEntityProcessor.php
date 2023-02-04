@@ -6,6 +6,7 @@ namespace App\Shared\Infrastructure\ApiPlatform\State\Processor;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Core\Util\StringParser;
+use App\Core\Uuid;
 use App\Shared\Application\CQRS\CommandBusInterface;
 use App\Shared\Application\CQRS\CommandInterface;
 use App\Shared\Application\CQRS\QueryBusInterface;
@@ -35,11 +36,21 @@ class ApiPlatformDomainEntityProcessor extends AbstractApiPlatformDomainEntityOp
         $domain = $operation->getShortName();
         $action = self::getActionForMethod($operation);
 
+        self::setIdIfMissing($data, $uriVariables);
+
+        /** @var  $commandClass */
         $commandClass = self::getEntityCommandClass($domain, $action);
         $command = $commandClass::createFromArray($data->jsonSerialize());
         $this->dispatchCommand($command);
 
         return $this->getDomainEntity($domain, $command->getId());
+    }
+
+    private static function setIdIfMissing(mixed $data, array $uriVariables)
+    {
+        if (null === $data->id && isset($uriVariables['id'])) {
+            $data->id = Uuid::create($uriVariables['id']);
+        }
     }
 
     private static function getActionForMethod(Operation $operation): string

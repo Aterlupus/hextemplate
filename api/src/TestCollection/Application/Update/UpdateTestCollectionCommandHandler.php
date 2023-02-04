@@ -27,7 +27,6 @@ class UpdateTestCollectionCommandHandler extends AbstractCommandHandler
     public function __invoke(UpdateTestCollectionCommand $command): void
     {
         $testCollection = $this->testCollectionRepository->get(new TestCollectionId($command->getId()));
-        //TODO: Catch exception in Infrastructure layer to respond with proper error code
         self::assertEntityNotNull($command->getId(), TestCollection::class, $testCollection);
 
         foreach ($command->getTestItemsIds() as $testItemId) {
