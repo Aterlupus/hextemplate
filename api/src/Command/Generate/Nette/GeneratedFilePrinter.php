@@ -78,8 +78,7 @@ class GeneratedFilePrinter extends NettePrinter
             : '';
     }
 
-    //TODO: in ./api/vendor/nette/php-generator/src/PhpGenerator/Printer.php printAttributes must be protected
-    /** @param  Attribute[]  $attrs */
+    /** @param Attribute[]  $attrs */
     protected function printAttributes(array $attrs, bool $inline = false): string
     {
         return parent::printAttributes($attrs, false);
