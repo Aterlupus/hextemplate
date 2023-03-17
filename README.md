@@ -30,8 +30,6 @@ Now you can:
 
 ### Domain Generation
 
-#### After downloading dependencies change *./api/vendor/nette/php-generator/src/PhpGenerator/Printer.php* *printAttribute* method (line 397) accessor to *protected* for generator to work (this will be fixed in future releases).  
-
 #### After failed app:generate:domain execution remove this domain's directory (if it was created)
 
 Create a `[domain].yaml` file for path `src/Command/Generate/schema/[domain].yaml` that will contain description of domain entity and its properties. See `src/Command/Generate/schema/TestTag.yaml` for practical reference. File format is:
