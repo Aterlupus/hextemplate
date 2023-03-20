@@ -60,6 +60,7 @@ parameters:
           - Symfony
           - Doctrine
           - ApiPlatform
+          - Webmozart
         Core:
           - Symfony
           - Webmozart
