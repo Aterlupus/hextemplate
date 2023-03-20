@@ -28,6 +28,11 @@ class PutTestCollectionTest extends AbstractPutFunctionalTest
         $this->itUpdates();
     }
 
+    public function testItFailsOnUpdatingNonExistentTestCollection()
+    {
+        $this->itFailsOnUpdatingNonExistent();
+    }
+
     public function testItFailsOnUpdatingTestCollectionWithoutName()
     {
         $this->itFailsOnUpdatingWithoutFieldValue('name');
@@ -47,6 +52,4 @@ class PutTestCollectionTest extends AbstractPutFunctionalTest
     {
         $this->itFailsOnUpdatingWithoutFieldValue('testItemsIds');
     }
-
-    //TODO: Test for missing TestCollection
 }
