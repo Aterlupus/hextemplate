@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Shared\Config\DoctrineMappingsGenerator;
+use App\Shared\Infrastructure\Config\DoctrineMappingsGenerator;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $containerConfigurator->extension('doctrine', [

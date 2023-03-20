@@ -5,7 +5,7 @@ namespace App\Shared\Infrastructure\Bundles\DoctrineCustomTypesRegisterer;
 
 use App\Core\Util\Files\FileGetter;
 use App\Core\Util\Regex;
-use App\Shared\Config\SourceDirectoryFinder;
+use App\Shared\Infrastructure\Config\SourceDirectoryFinder;
 
 class DoctrineCustomTypesProvider
 {
