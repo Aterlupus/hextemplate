@@ -74,7 +74,7 @@ phpunit:
 ## Run deptrac
 deptrac:
 	@echo "${YELLOW}Checking Bounded contexts...${RESET}"
-	@$(EXEC) vendor/bin/deptrac
+	@$(EXEC) vendor/bin/deptrac --report-uncovered
 
 ## Enter database container
 mysql:
